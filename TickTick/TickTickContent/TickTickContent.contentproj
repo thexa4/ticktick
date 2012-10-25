@@ -57,32 +57,38 @@
     <Compile Include="Audio\snd_music.wma">
       <Name>snd_music</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
+      <ProcessorParameters_Quality>Medium</ProcessorParameters_Quality>
     </Compile>
     <Compile Include="Audio\snd_player_die.wma">
       <Name>snd_player_die</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
+      <ProcessorParameters_Quality>Medium</ProcessorParameters_Quality>
     </Compile>
     <Compile Include="Audio\snd_player_fall.wma">
       <Name>snd_player_fall</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
+      <ProcessorParameters_Quality>Medium</ProcessorParameters_Quality>
     </Compile>
     <Compile Include="Audio\snd_player_jump.wma">
       <Name>snd_player_jump</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
+      <ProcessorParameters_Quality>Medium</ProcessorParameters_Quality>
     </Compile>
     <Compile Include="Audio\snd_player_won.wma">
       <Name>snd_player_won</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
+      <ProcessorParameters_Quality>Medium</ProcessorParameters_Quality>
     </Compile>
     <Compile Include="Audio\snd_watercollected.wma">
       <Name>snd_watercollected</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
+      <ProcessorParameters_Quality>Medium</ProcessorParameters_Quality>
     </Compile>
   </ItemGroup>
   <ItemGroup>
