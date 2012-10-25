@@ -15,7 +15,7 @@ namespace TickTick.Drawing
         /// <summary>
         /// The subcomponents
         /// </summary>
-        public List<DrawableGameComponent> Children { get; protected set; }
+        protected List<DrawableGameComponent> _children;
 
         /// <summary>
         /// Draws all components in this layer
@@ -23,8 +23,9 @@ namespace TickTick.Drawing
         /// <param name="gameTime">The current gameTime</param>
         public override void Draw(GameTime gameTime)
         {
-            foreach (var child in Children)
-                child.Draw(gameTime);
+            foreach (var child in _children)
+                if(child.Visible)
+                    child.Draw(gameTime);
         }
 
         /// <summary>
@@ -33,8 +34,28 @@ namespace TickTick.Drawing
         /// <param name="gameTime">The current gameTime</param>
         public override void Update(GameTime gameTime)
         {
-            foreach (var child in Children)
-                child.Update(gameTime);
+            foreach (var child in _children)
+                if(child.Enabled)
+                    child.Update(gameTime);
+        }
+
+        /// <summary>
+        /// Adds a new component to this layer
+        /// </summary>
+        /// <param name="component">The component to add</param>
+        public void Add(DrawableGameComponent component)
+        {
+            _children.Add(component);
+            component.Initialize();
+        }
+
+        /// <summary>
+        /// Removes a component from this layer
+        /// </summary>
+        /// <param name="component">The component to remove</param>
+        public void Remove(DrawableGameComponent component)
+        {
+            _children.Remove(component);
         }
 
         /// <summary>
@@ -44,7 +65,7 @@ namespace TickTick.Drawing
         public Layer(Game game)
             : base(game)
         {
-            Children = new List<DrawableGameComponent>();
+            _children = new List<DrawableGameComponent>();
         }
     }
 }
