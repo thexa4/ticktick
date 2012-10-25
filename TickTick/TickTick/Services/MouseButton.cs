@@ -7,5 +7,8 @@ namespace TickTick.Services
 {
     public enum MouseButton
     {
+        Left,
+        Middle,
+        Right,
     }
 }
