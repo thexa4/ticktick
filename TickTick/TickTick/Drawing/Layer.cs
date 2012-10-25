@@ -12,7 +12,7 @@ namespace TickTick.Drawing
     /// Represents a depth slice of the current scene
     /// Draws and updates all child components
     /// </summary>
-    class Layer : DrawableGameComponent
+    public class Layer : DrawableGameComponent
     {
         /// <summary>
         /// The subcomponents

@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace TickTick.Drawing.Actors
 {
-    class Tile : Sprite
+    class Tile : LevelSprite
     {
         public Tile(Game game, Layer layer, string assetname)
             : base(game, layer, assetname)

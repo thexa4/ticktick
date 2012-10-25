@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using TickTick.Services;
 using Microsoft.Xna.Framework.Graphics;
-using TickTick.Drawing.Actors;
+using TickTick.Drawing;
 
 namespace TickTick.Screens
 {
@@ -28,7 +28,7 @@ namespace TickTick.Screens
             this.ScreenManager.SpriteFonts.LoadFont("Title", "Fonts/Title");
             this.ScreenManager.SpriteFonts.LoadFont("Help", "Fonts/Default");
 
-            _background = new Sprite(this.Game, null, "Backgrounds/spr_title")
+            _background = new Sprite(this.Game, "Backgrounds/spr_title")
             {
                 Position = Vector2.Zero,
 

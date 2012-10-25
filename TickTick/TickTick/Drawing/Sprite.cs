@@ -95,7 +95,7 @@ namespace TickTick.Drawing
         /// Enables a sprite to load data
         /// </summary>
         /// <param name="contentManager"></param>
-        public void LoadContent(ContentManager contentManager)
+        public virtual void LoadContent(ContentManager contentManager)
         {
             this.ContentManager = contentManager;
             this.Texture = this.ContentManager.Load<Texture2D>(this.AssetName);
@@ -121,7 +121,7 @@ namespace TickTick.Drawing
         /// </summary>
         /// <param name="gameTime">The current gametime</param>
         /// <param name="spriteBatch">The current spritebatch</param>
-        public void DrawSprite(GameTime gameTime, SpriteBatch spriteBatch)
+        public virtual void DrawSprite(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(this.Texture, this.Position, this.SourceRectangle, this.Color, 0, 
                 this.Origin, this.Scale, this.SpriteEffect, 0);
