@@ -16,6 +16,10 @@ namespace TickTick.Drawing.Actors
         /// </summary>
         public Vector2 Position { get; set; }
         /// <summary>
+        /// The layer the sprite is on
+        /// </summary>
+        public Layer Layer { get; protected set; }
+        /// <summary>
         /// The asset name of this sprite
         /// </summary>
         public string AssetName { get; protected set; }
@@ -54,12 +58,13 @@ namespace TickTick.Drawing.Actors
         /// </summary>
         /// <param name="game">The game the sprite belongs to</param>
         /// <param name="assetname">The texture to display</param>
-        public Sprite(Game game, string assetname)
+        public Sprite(Game game, Layer layer, string assetname)
             : base(game)
         {
             AnimationSpeed = 0.125f;
             SpriteEffect = SpriteEffects.None;
             AssetName = assetname;
+            Layer = layer;
 
             Rows = 1;
             Columns = 1;
