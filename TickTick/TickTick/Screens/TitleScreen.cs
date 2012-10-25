@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using TickTick.Services;
 using Microsoft.Xna.Framework.Graphics;
+using TickTick.Drawing.Actors;
 
 namespace TickTick.Screens
 {
@@ -13,6 +14,8 @@ namespace TickTick.Screens
     /// </summary>
     public class TitleScreen : GameScreen
     {
+        protected Sprite _background, _playButton, _helpButton;
+        protected Int32 _menuIndex;
 
         /// <summary>
         /// Loads all content for this screen
@@ -25,7 +28,11 @@ namespace TickTick.Screens
             this.ScreenManager.SpriteFonts.LoadFont("Title", "Fonts/Title");
             this.ScreenManager.SpriteFonts.LoadFont("Help", "Fonts/Default");
 
-           
+            _background = new Sprite(this.Game, null, "Backgrounds/spr_title")
+            {
+                Position = Vector2.Zero,
+
+            };
         }
 
         /// <summary>
@@ -51,11 +58,21 @@ namespace TickTick.Screens
 
             if (this.InputManager.Keyboard.IsKeyReleased(Keys.Enter))
             {
-
+                switch (_menuIndex)
+                {
+                    case 0:
+                        this.ScreenManager.AddScreen(new TitleScreen());
+                        break;
+                    case 1:
+                        this.ScreenManager.AddScreen(new TitleScreen());
+                        break;
+                }
+                
+                this.ExitScreen();
             }
             else if (this.InputManager.Keyboard.IsKeyReleased(Keys.Escape))
             {
-
+                this.ExitScreen();
             }
         }
 
@@ -71,6 +88,7 @@ namespace TickTick.Screens
             base.Draw(gameTime);
 
             this.ScreenManager.SpriteBatch.Begin();
+            _background.Draw(gameTime);
             this.ScreenManager.SpriteBatch.End();
         }
     }
