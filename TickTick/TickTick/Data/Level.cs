@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace TickTick.Data
 {
@@ -18,7 +19,14 @@ namespace TickTick.Data
         /// The Height of the level
         /// </summary>
         public int Height { get; protected set; }
+        /// <summary>
+        /// The Description of the level
+        /// </summary>
+        public string Description { get; set; }
 
+        /// <summary>
+        /// The internal representation of the level file
+        /// </summary>
         protected char[,] _data;
 
         /// <summary>
@@ -42,6 +50,32 @@ namespace TickTick.Data
             Width = width;
             Height = height;
             _data = new char[height, width];
+        }
+
+        /// <summary>
+        /// Reads a level from a file
+        /// </summary>
+        /// <param name="path">The path to the file</param>
+        /// <returns>The level</returns>
+        static Level ReadLevel(string path)
+        {
+            var f = new FileInfo(path);
+            FileStream stream = f.OpenRead();
+            StreamReader reader = new StreamReader(stream);
+
+            //TODO: implement variable level sizes
+            var level = new Level(20, 15);
+
+            for (int y = 0; y < 15; y++)
+            {
+                string line = reader.ReadLine();
+                for (int x = 0; x < 20; x++)
+                    level[x, y] = line[x];
+            }
+
+            level.Description = reader.ReadLine();
+
+            return level;
         }
     }
 }
