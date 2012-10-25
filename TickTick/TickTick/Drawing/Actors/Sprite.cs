@@ -93,6 +93,10 @@ namespace TickTick.Drawing.Actors
             Texture = contentManager.Load<Texture2D>(AssetName);
         }
 
+        /// <summary>
+        /// Updates the current frame
+        /// </summary>
+        /// <param name="gameTime">The current gametime</param>
         public override void Update(GameTime gameTime)
         {
             _timeLeft -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -106,7 +110,24 @@ namespace TickTick.Drawing.Actors
 
         public override void Draw(GameTime gameTime)
         {
-            
+            var screenmanager = (ScreenManager)this.Game.Services.GetService(typeof(ScreenManager));
+            DrawSprite(gameTime, screenmanager.SpriteBatch);
+        }
+
+        /// <summary>
+        /// Enables you to draw a sprite using the current spritebatch
+        /// </summary>
+        /// <param name="gameTime">The current gametime</param>
+        /// <param name="spriteBatch">The current spritebatch</param>
+        public void DrawSprite(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            int framewidth = Texture.Width / Columns;
+            int frameheight = Texture.Height / Rows;
+
+            int curx = Frame % Columns;
+            int cury = Frame / Rows;
+
+            spriteBatch.Draw(Texture, Position, new Rectangle(curx * framewidth, cury * frameheight, framewidth, frameheight), Color.White, 0, Vector2.Zero, 1, SpriteEffect, 0);
         }
     }
 }

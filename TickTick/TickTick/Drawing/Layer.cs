@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using TickTick.Services;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TickTick.Drawing
 {
@@ -23,9 +25,12 @@ namespace TickTick.Drawing
         /// <param name="gameTime">The current gameTime</param>
         public override void Draw(GameTime gameTime)
         {
+            var screenmanager = (ScreenManager)this.Game.Services.GetService(typeof(ScreenManager));
+            screenmanager.SpriteBatch.Begin();
             foreach (var child in _children)
                 if(child.Visible)
                     child.Draw(gameTime);
+            screenmanager.SpriteBatch.End();
         }
 
         /// <summary>
