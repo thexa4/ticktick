@@ -6,14 +6,12 @@ using Microsoft.Xna.Framework;
 
 namespace TickTick.Drawing.Actors
 {
-    class Actor : DrawableGameComponent
+    class Tile : Sprite
     {
-        public Vector2 Position { get; set; }
-
-        public Actor(Game game)
+        public Tile(Game game)
             : base(game)
         {
-            
+
         }
     }
 }

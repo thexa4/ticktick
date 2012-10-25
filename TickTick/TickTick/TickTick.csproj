@@ -107,11 +107,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drawing\Actors\Actor.cs" />
     <Compile Include="Data\Level.cs" />
-    <Compile Include="Data\Tile.cs" />
-    <Compile Include="Data\WalkingActor.cs" />
+    <Compile Include="Drawing\Actors\Sprite.cs" />
+    <Compile Include="Drawing\Actors\Tile.cs" />
+    <Compile Include="Drawing\Actors\WalkingActor.cs" />
     <Compile Include="Drawing\Layer.cs" />
-    <Compile Include="Drawing\LevelDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
