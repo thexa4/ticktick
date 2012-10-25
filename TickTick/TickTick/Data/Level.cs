@@ -9,7 +9,7 @@ namespace TickTick.Data
     /// <summary>
     /// Represents a level
     /// </summary>
-    class Level
+    public class Level
     {
         /// <summary>
         /// The Width of the level
@@ -49,6 +49,7 @@ namespace TickTick.Data
         {
             Width = width;
             Height = height;
+
             _data = new char[height, width];
         }
 
@@ -57,7 +58,7 @@ namespace TickTick.Data
         /// </summary>
         /// <param name="path">The path to the file</param>
         /// <returns>The level</returns>
-        static Level ReadLevel(string path)
+        public static Level ReadLevel(string path)
         {
             var f = new FileInfo(path);
             FileStream stream = f.OpenRead();
