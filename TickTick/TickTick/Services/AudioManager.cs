@@ -25,7 +25,7 @@ namespace TimeTetris.Services
             // Add this as a service
             this.Game.Services.AddService(typeof(AudioManager), this);
 
-            // Special content Manager just for sounds
+            // Special content Manager just for sounds. Make an 
             _contentManager = new ContentManager(game.Services);
             _contentManager.RootDirectory = "Content/Audio";
         }
