@@ -63,13 +63,15 @@ namespace TickTick.Data
             FileStream stream = f.OpenRead();
             StreamReader reader = new StreamReader(stream);
 
-            //TODO: implement variable level sizes
-            var level = new Level(20, 15);
+            int width = 20;
+            int height = 15;
 
-            for (int y = 0; y < 15; y++)
+            var level = new Level(width, height);
+
+            for (int y = 0; y < height; y++)
             {
                 string line = reader.ReadLine();
-                for (int x = 0; x < 20; x++)
+                for (int x = 0; x < width; x++)
                     level[x, y] = line[x];
             }
 
