@@ -27,16 +27,24 @@ namespace TickTick.Drawing
                 child.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Updates all components in this layer
+        /// </summary>
+        /// <param name="gameTime">The current gameTime</param>
         public override void Update(GameTime gameTime)
         {
             foreach (var child in Children)
                 child.Update(gameTime);
         }
 
+        /// <summary>
+        /// Creates a new Layer
+        /// </summary>
+        /// <param name="game">The game the Layer belongs to</param>
         public Layer(Game game)
             : base(game)
         {
-
+            Children = new List<DrawableGameComponent>();
         }
     }
 }
