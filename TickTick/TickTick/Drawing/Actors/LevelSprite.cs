@@ -45,8 +45,6 @@ namespace TickTick.Drawing.Actors
                 int cury = Frame / Columns;
 
                 this.SourceRectangle = new Rectangle(curx * framewidth, cury * frameheight, framewidth, frameheight);
-
-                System.Diagnostics.Debug.WriteLine(String.Format("{0}, {1} on {2}", curx, cury, _frame));
             }
         }
         private Int32 _frame;
