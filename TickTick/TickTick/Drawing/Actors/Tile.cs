@@ -8,8 +8,8 @@ namespace TickTick.Drawing.Actors
 {
     class Tile : Sprite
     {
-        public Tile(Game game)
-            : base(game)
+        public Tile(Game game, Layer layer, string assetname)
+            : base(game, layer, assetname)
         {
 
         }
