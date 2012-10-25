@@ -25,14 +25,14 @@ namespace TickTick.Screens
         {
             base.LoadContent(contentManager);
 
-            this.ScreenManager.SpriteFonts.LoadFont("Title", "Fonts/Title");
-            this.ScreenManager.SpriteFonts.LoadFont("Help", "Fonts/Default");
-
-            _background = new Sprite(this.Game, "Backgrounds/spr_title")
+            _background = new Sprite(this.Game, "Graphics/Backgrounds/spr_title")
             {
-                Position = Vector2.Zero,
+                Position = Vector2.UnitY * - 100 + Vector2.UnitX * -50,
 
             };
+            _background.Initialize();
+            _playButton = new TickTick.Drawing.Actors.LevelSprite(this.Game, null, "Graphics/Sprites/Flame/spr_flame@9");
+            _playButton.Initialize();
         }
 
         /// <summary>
@@ -43,9 +43,8 @@ namespace TickTick.Screens
         /// <param name="coveredByOtherScreen">Other GameScreen is active</param>
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-
+            _playButton.Update(gameTime);
         }
 
         /// <summary>
@@ -89,6 +88,7 @@ namespace TickTick.Screens
 
             this.ScreenManager.SpriteBatch.Begin();
             _background.Draw(gameTime);
+            _playButton.Draw(gameTime);
             this.ScreenManager.SpriteBatch.End();
         }
     }

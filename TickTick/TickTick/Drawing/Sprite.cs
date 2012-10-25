@@ -78,9 +78,8 @@ namespace TickTick.Drawing
 
         public override void Initialize()
         {
-            base.Initialize();
-
             this.ScreenManager = (ScreenManager)this.Game.Services.GetService(typeof(ScreenManager));
+            base.Initialize();
         }
 
         /// <summary>

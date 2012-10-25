@@ -191,7 +191,9 @@ namespace TickTick
 
             this.SpriteBatch.Begin();
             this.SpriteBatch.DrawString(this.ScreenManager.SpriteFonts["Framerate"], framerateString,
-                Vector2.One * 5 + Vector2.UnitX * (1024 - 10 - this.ScreenManager.SpriteFonts["Framerate"].MeasureString(framerateString).X), Color.White);
+                Vector2.One * 6 + Vector2.UnitX * (1280 - 10 - this.ScreenManager.SpriteFonts["Framerate"].MeasureString(framerateString).X), Color.Black);
+            this.SpriteBatch.DrawString(this.ScreenManager.SpriteFonts["Framerate"], framerateString,
+                Vector2.One * 5 + Vector2.UnitX * (1280 - 10 - this.ScreenManager.SpriteFonts["Framerate"].MeasureString(framerateString).X), Color.White);
             this.SpriteBatch.End();
         }
     }

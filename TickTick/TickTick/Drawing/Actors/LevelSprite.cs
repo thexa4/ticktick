@@ -42,8 +42,11 @@ namespace TickTick.Drawing.Actors
                 int frameheight = Texture.Height / Rows;
 
                 int curx = Frame % Columns;
-                int cury = Frame / Rows;
+                int cury = Frame / Columns;
+
                 this.SourceRectangle = new Rectangle(curx * framewidth, cury * frameheight, framewidth, frameheight);
+
+                System.Diagnostics.Debug.WriteLine(String.Format("{0}, {1} on {2}", curx, cury, _frame));
             }
         }
         private Int32 _frame;
@@ -66,7 +69,7 @@ namespace TickTick.Drawing.Actors
         public LevelSprite(Game game, Layer layer, string assetname)
             : base(game, assetname)
         {
-            this.AnimationSpeed = 0.125f;
+            this.AnimationSpeed = 1f / 24f;
             this.Layer = layer;
 
             this.Rows = 1;
@@ -105,6 +108,7 @@ namespace TickTick.Drawing.Actors
             {
                 this.Frame += frames;
                 this.Frame = Frame % (Rows * Columns);
+                _timeLeft = AnimationSpeed;
             }
 
 
