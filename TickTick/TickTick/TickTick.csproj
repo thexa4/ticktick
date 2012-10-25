@@ -119,12 +119,11 @@
     <Compile Include="Services\AudioManager.cs" />
     <Compile Include="Services\ControllerAction.cs" />
     <Compile Include="Services\FontCache.cs" />
-    <Compile Include="Services\GamepadController.cs" />
     <Compile Include="Services\GameScreen.cs" />
-    <Compile Include="Services\GameSettings.cs" />
     <Compile Include="Services\IController.cs" />
     <Compile Include="Services\InputManager.cs" />
     <Compile Include="Services\KeyboardController.cs" />
+    <Compile Include="Services\MouseButton.cs" />
     <Compile Include="Services\ScreenManager.cs" />
     <Compile Include="Services\ScreenState.cs" />
   </ItemGroup>

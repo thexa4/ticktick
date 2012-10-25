@@ -1,5 +1,5 @@
 ﻿
-namespace TimeTetris.Services
+namespace TickTick.Services
 {
     public enum ScreenState
     {
@@ -7,22 +7,10 @@ namespace TimeTetris.Services
         /// 
         /// </summary>
         Hidden,
-        /// <summary>
-        /// 
-        /// </summary>
-        TransitionOn,
-        /// <summary>
-        /// 
-        /// </summary>
-        TransitionOff,
+        
         /// <summary>
         /// 
         /// </summary>
         Active,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        WaitingForTransition
     }
 }

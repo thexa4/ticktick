@@ -4,10 +4,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TimeTetris.Services
+namespace TickTick.Services
 {
     /// <summary>
-    /// This Component loads and keeps track of all the fonts. It allows us to load a spritefont once instead of 
+    /// This Component loads and keeps track of all the fonts. It allows us to load a spritefont once instead of
     /// many times (each screen, each instance). The global contentmanager holds the loaded fonts, so individual
     /// screen-contentmanagers can easily be disposed without the risk of triggering an ContentDisposedException.
     /// </summary>

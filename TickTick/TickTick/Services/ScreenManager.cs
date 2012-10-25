@@ -5,19 +5,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TimeTetris.Services
+namespace TickTick.Services
 {
     /// <summary>
     /// The screen manager is a component which manages one or more <see cref="GameScreen"/>
-    /// instances. It maintains a stack of _screens, calls their Update and Draw
-    /// methods at the appropriate times, and automatically routes _input to the
-    /// topmost active screen.
+    /// instances. It maintains a stack of _screens, calls their Update and Draw methods at
+    /// the appropriate times, and automatically routes _input to the topmost active screen.
     /// </summary>
     public class ScreenManager : DrawableGameComponent
     {
         #region Fields (Blank Texture, GraphicsDeviceService, Screens, SpriteFonts)
 
-        private static Texture2D _blankTexture;
         private static IGraphicsDeviceService _graphicsDeviceService;
         private static List<GameScreen> _screens = new List<GameScreen>();
         private static List<GameScreen> _screensToUpdate = new List<GameScreen>();
@@ -25,8 +23,6 @@ namespace TimeTetris.Services
         private Int32 _screenWidth, _screenHeight;
 
         #endregion
-
-        private readonly String BlankTextureAsset = "Graphics/Blank";
 
         /// <summary>
         /// Number of Screens
@@ -60,25 +56,25 @@ namespace TimeTetris.Services
 
         #region Properties
         /// <summary>
-        /// A content manager used to load data that is shared between multiple
-        /// screens. This is never unloaded, so if a screen requires a large amount
-        /// of temporary data, it should create a local content manager instead.
+        /// A content manager used to load data that is shared between multiple screens. This is
+        /// never unloaded, so if a screen requires a large amount of temporary data, it should
+        /// create a local content manager instead.
         /// </summary>
         public ContentManager ContentManager { get; private set; }
 
         /// <summary>
-        /// A default SpriteBatch shared by all the screens. This saves
-        /// each screen having to bother creating their own local instance.
+        /// A default SpriteBatch shared by all the screens. This saves each screen having to bother
+        /// creating their own local instance. They still can, but they don't need to. 
         /// </summary>
         public SpriteBatch SpriteBatch { get; private set; }
 
         /// <summary>
-        /// 
+        /// InputManager reference
         /// </summary>
         public InputManager InputManager { get; private set; }
 
         /// <summary>
-        /// Property that returns the FontCollector Object
+        /// SpriteFonts cache reference
         /// </summary>
         public FontCache SpriteFonts
         {
@@ -86,8 +82,8 @@ namespace TimeTetris.Services
         }
 
         /// <summary>
-        /// Expose access to our Game instance (this is protected in the
-        /// default <see cref="GameComponent"/>, but we want to make it public).
+        /// Expose access to our Game instance (this is protected in the default 
+        /// <see cref="GameComponent"/>, but we want to make it public).
         /// </summary>
         public new Game Game
         {
@@ -95,8 +91,8 @@ namespace TimeTetris.Services
         }
 
         /// <summary>
-        /// Expose access to our graphics device (this is protected in the
-        /// default <see cref="DrawableGameComponent"/>, but we want to make it public).
+        /// Expose access to our graphics device (this is protected in the default 
+        /// <see cref="DrawableGameComponent"/>, but we want to make it public).
         /// </summary>
         public new GraphicsDevice GraphicsDevice
         {
@@ -146,23 +142,14 @@ namespace TimeTetris.Services
         }
 
         /// <summary>
-        /// If true, the manager prints out a list of all the screens
-        /// each time it is updated. This can be useful for making sure
-        /// everything is being added and removed at the right times.
+        /// If true, the manager prints out a list of all the screens each time it is updated.
+        /// This can be useful for making sure everything is being added and removed at the right 
+        /// time, or just to trace the screens added.
         /// </summary>
-        public bool TraceEnabled { get; set; }
+        public Boolean TraceEnabled { get; set; }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public String NextScreen
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 
+        /// Event that is called when there are no more screens
         /// </summary>
         public event EventHandler NoMoreScreens;
         #endregion
@@ -174,12 +161,8 @@ namespace TimeTetris.Services
         /// <param name="e">Event Arguments</param>
         private void GameExiting(object sender, EventArgs e)
         {
-            //Make sure to dispose ALL screens when the game is forcefully closed
-            //We do this to ensure that open resources and threads created by screens are closed.
-            foreach (GameScreen screen in _screens)
-            {
-                screen.Dispose();
-            }
+            UnloadContent();
+
             // Clear the Arrays
             _screens.Clear();
             _screensToUpdate.Clear();
@@ -214,20 +197,7 @@ namespace TimeTetris.Services
         /// </summary>
         protected override void LoadContent()
         {
-            // Load content belonging to the screen manager.
             this.SpriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // Try to load this Texture
-            try
-            {
-                _blankTexture = this.ContentManager.Load<Texture2D>(BlankTextureAsset);
-            }
-            // If texture was not found...
-            catch (ContentLoadException)
-            {
-                // ...Notify and mark a method as not usable
-                //Logger.Warning("Blank texture was not loaded. FadeBackBuffertoBlack can not be used");
-            }
         }
 
         /// <summary>
@@ -235,15 +205,13 @@ namespace TimeTetris.Services
         /// </summary>
         protected override void UnloadContent()
         {
-            ContentManager.Unload();
+            this.ContentManager.Unload();
 
             // Tell each of the _screens to unload their content.
             foreach (GameScreen screen in _screens)
-            {
                 screen.UnloadContent();
-            }
 
-            SpriteBatch.Dispose();
+            this.SpriteBatch.Dispose();
         }
 
         /// <summary>
@@ -251,9 +219,10 @@ namespace TimeTetris.Services
         /// </summary>
         public override void Update(GameTime gameTime)
         {
-            // Make a copy of the master screen list, to avoid confusion if
-            // the process of updating one screen adds or removes others.
+            // Make a copy of the master screen list, to avoid exceptions if the process of updating
+            // one screen adds or removes screens. You can not update a collection while iterating.
             _screensToUpdate.Clear();
+
             lock (_screens)
                 for (Int32 i = 0; i < _screens.Count; i++)
                     _screensToUpdate.Add(_screens[i]);
@@ -261,14 +230,10 @@ namespace TimeTetris.Services
             // Exit Game if there is nothing more to show or update
             if (_screensToUpdate.Count == 0)
             {
-                if (NoMoreScreens != null)
-                {
-                    NoMoreScreens.Invoke(this, EventArgs.Empty);
-                }
+                if (this.NoMoreScreens != null)
+                    this.NoMoreScreens.Invoke(this, EventArgs.Empty);
                 else
-                {
-                    Game.Exit();
-                }
+                    this.Game.Exit();
             }
 
             // Get Game State and Screen State
@@ -287,30 +252,21 @@ namespace TimeTetris.Services
                 {
                     i_screen.Update(gameTime, i_otherScreenHasFocus, i_coveredByOtherScreen);
 
-                    if (i_screen.ScreenState == ScreenState.TransitionOn ||
-                        i_screen.ScreenState == ScreenState.Active)
+                    if (i_screen.ScreenState == ScreenState.Active)
                     {
                         // If this is the first active screen we came across,
                         // give it a chance to handle _input.
-                        if (i_screen.IsCapturingInput)
-                        {
-                            i_screen.HandleInput(gameTime);
-                            i_otherScreenHasFocus = true;
-                        }
-                        // If this is some active popup, handle _input
-                        else if (i_screen.IsPopup)
+                        if (!i_otherScreenHasFocus)
                             i_screen.HandleInput(gameTime);
 
-                        // If this is an active non-popup, inform any subsequent
-                        // _screens that they are covered by it.
-                        if (!i_screen.IsPopup)
-                            i_coveredByOtherScreen = true;
+                        // Inform any subsequent_screens that they are covered by it.
+                        i_coveredByOtherScreen = true;
                     }
                 }
             }
 
             // Print debug trace?
-            if (TraceEnabled)
+            if (this.TraceEnabled)
                 TraceScreens();
         }
 
@@ -319,28 +275,24 @@ namespace TimeTetris.Services
         /// </summary> 
         private void TraceScreens()
         {
-            // Make a list of screenNames in memory
             List<String> i_screenNames = new List<String>();
-            // Add all ScreenNames to this list          
             foreach (GameScreen i_screen in _screens)
                 i_screenNames.Add(i_screen.GetType().Name);
-            // Write the List to the Trace
+
             Trace.WriteLine(String.Join(", ", i_screenNames.ToArray()));
         }
 
         /// <summary>
         /// Tells each screen to draw itself.
         /// </summary>
+        /// <param name="gameTime">Snapshot of Timing Values</param>
         public override void Draw(GameTime gameTime)
         {
-            // For every screen
             for (Int32 i = 0; i < _screens.Count; i++)
             {
-                // If not hidden ScreenState
+                // If not hidden
                 if (_screens[i].ScreenState == ScreenState.Hidden || _screens[i].IsVisible == false)
                     continue;
-
-                // Draw this screen
                 _screens[i].Draw(gameTime);
             }
         }
@@ -348,34 +300,30 @@ namespace TimeTetris.Services
         /// <summary>
         /// Adds a new screen to the screen manager.
         /// </summary>
+        /// <param name="screen">Screen to add</param>
         public void AddScreen(GameScreen screen)
         {
             screen.ScreenManager = this;
             screen.Game = this.Game;
 
-            // Initialize this Screen
             screen.Initialize();
 
             // If we have a graphics device, tell the screen to load content.
-            if ((_graphicsDeviceService != null) &&
-                (_graphicsDeviceService.GraphicsDevice != null))
-            {
-                // Load the Content
+            if (_graphicsDeviceService != null && _graphicsDeviceService.GraphicsDevice != null)
                 screen.LoadContent(new ContentManager(Game.Services, "Content"));
-            }
-            // Actually Add the screen to the list
+
             lock (_screens)
                 _screens.Add(screen);
+
             // Process post actions
-            screen.PostProcessing();
+            screen.AfterScreenIsAdded();
 
         }
 
         /// <summary>
-        /// Removes a screen from the screen manager. You should normally
-        /// use <see cref="GameScreen"/>.ExitScreen instead of calling this directly, so
-        /// the screen can gradually transition off rather than just being
-        /// instantly removed.
+        /// Removes a screen from the screen manager. You should normally use 
+        /// <see cref="GameScreen"/>.ExitScreen instead of calling this directly, so the screen can
+        /// gradually "transition off" rather than just being instantly removed.
         /// </summary>
         public void RemoveScreen(GameScreen screen)
         {
@@ -391,8 +339,6 @@ namespace TimeTetris.Services
 
             lock (_screensToUpdate)
                 _screensToUpdate.Remove(screen);
-            // Dispose the Screen (Release it's Content)
-            screen.Dispose();
         }
 
         /// <summary>
@@ -428,28 +374,6 @@ namespace TimeTetris.Services
 
             foreach (GameScreen i_screen in to_remove)
                 i_screen.ExitScreen();
-        }
-
-        /// <summary>
-        /// Helper draws a translucent black full screen sprite, used for fading
-        /// screens in and out, and for darkening the background behind popups.
-        /// </summary>
-        public void FadeBackBufferToBlack(Byte alpha)
-        {
-            // If texture was not loaded
-            if (_blankTexture == null)
-                // Kill this call
-                throw (new InvalidOperationException("FadeBackBufferToBlack not available",
-                    new ContentLoadException("Blank texture was not loaded. FadeBackBuffertoBlack can not be used")));
-
-            // Start the SpriteBatch
-            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-            // Stretch Texture to Viewport
-            SpriteBatch.Draw(_blankTexture,
-                             new Rectangle(0, 0, this.ScreenWidth, this.ScreenHeight),
-                             new Color(0, 0, 0, alpha));
-            // Flush the SpriteBatch
-            SpriteBatch.End();
         }
     }
 }

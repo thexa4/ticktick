@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TimeTetris.Services
+namespace TickTick.Services
 {
-    public enum ControllerAction : int
+    /// <summary>
+    /// ControllerAction is the result enumeration for the Controller classes
+    /// which handle input.
+    /// </summary>
+    public enum ControllerAction : byte
     {
         None = 0,
 
         Left = 1,
         Right = 2,
-        Down = 3,
-        Drop = 4,
-        RotateCW = 5,
-        RotateCCW = 6,
-        Time = 7,
-        Hold = 8,
+
+        Jump = 4,
     }
 }

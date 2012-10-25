@@ -1,18 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace TimeTetris.Services
+namespace TickTick.Services
 {
     public class KeyboardController : GameComponent, IController
     {
-
+        /// <summary>
+        /// Current Action
+        /// </summary>
         public ControllerAction Action
         {
             get;
             protected set;
         }
 
-        private Keys _down, _left, _right, _drop, _rotateLeft, _rotateRight, _time, _hold;
+        private Keys _jump, _left, _right;
         private InputManager _inputManager;
 
         /// <summary>
@@ -20,26 +22,18 @@ namespace TimeTetris.Services
         /// </summary>
         /// <param name="game">Game to bind to</param>
         /// <param name="down">Soft down button</param>
-        /// <param name="drop">Drop down button</param>
+
         /// <param name="left">Move left button</param>
         /// <param name="right">Move right button</param>
-        /// <param name="rotateLeft">Rotate Left button</param>
-        /// <param name="rotateRight">Rotate Right button</param>
-        /// <param name="time">Rewind time button</param>
-        public KeyboardController(Game game, Keys down, Keys left, Keys right, Keys drop, Keys rotateLeft, Keys rotateRight, Keys time, Keys Hold) : base(game)
+        public KeyboardController(Game game, Keys jump, Keys left, Keys right) : base(game)
         {
-            _drop = drop;
-            _down = down;
-            _left = left;
             _right = right;
-            _rotateLeft = rotateLeft;
-            _rotateRight = rotateRight;
-            _time = time;
-            _hold = Hold;
+            _left = left;
+            _jump = jump;
         }
 
         /// <summary>
-        /// 
+        /// Get or set the key used to control an action by action
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -52,18 +46,9 @@ namespace TimeTetris.Services
                         return _left;
                     case ControllerAction.Right:
                         return _right;
-                    case ControllerAction.Down:
-                        return _down;
-                    case ControllerAction.Hold:
-                        return _hold;
-                    case ControllerAction.Drop:
-                        return _drop;
-                    case ControllerAction.Time:
-                        return _time;
-                    case ControllerAction.RotateCCW:
-                        return _rotateLeft;
-                    case ControllerAction.RotateCW:
-                        return _rotateRight;
+                    case ControllerAction.Jump:
+                        return _jump;
+                    
                     default:
                         return Keys.None;
                 }
@@ -79,24 +64,10 @@ namespace TimeTetris.Services
                     case ControllerAction.Right:
                         _right = value;
                         break;
-                    case ControllerAction.Down:
-                        _down = value;
+                    case ControllerAction.Jump:
+                        _jump = value;
                         break;
-                    case ControllerAction.Hold:
-                        _hold = value;
-                        break;
-                    case ControllerAction.Drop:
-                        _drop = value;
-                        break;
-                    case ControllerAction.Time:
-                        _time = value;
-                        break;
-                    case ControllerAction.RotateCCW:
-                        _rotateLeft = value;
-                        break;
-                    case ControllerAction.RotateCW:
-                        _rotateRight = value;
-                        break;
+                    
                     default:
                         return;
                 }
@@ -127,22 +98,12 @@ namespace TimeTetris.Services
             if (!this.Enabled)
                 return;
 
-            if (_inputManager.Keyboard.IsKeyTriggerd(_left))
+            if (_inputManager.Keyboard.IsKeyDown(_left))
                 Action = ControllerAction.Left;
-            else if (_inputManager.Keyboard.IsKeyTriggerd(_right))
+            else if (_inputManager.Keyboard.IsKeyDown(_right))
                 Action = ControllerAction.Right;
-            else if (_inputManager.Keyboard.IsKeyTriggerd(_down))
-                Action = ControllerAction.Down;
-            else if (_inputManager.Keyboard.IsKeyTriggerd(_drop))
-                Action = ControllerAction.Drop;
-            else if (_inputManager.Keyboard.IsKeyTriggerd(_rotateLeft))
-                Action = ControllerAction.RotateCCW;
-            else if (_inputManager.Keyboard.IsKeyTriggerd(_rotateRight))
-                Action = ControllerAction.RotateCW;
-            else if (_inputManager.Keyboard.IsKeyDown(_time))
-                Action = ControllerAction.Time;
-            else if (_inputManager.Keyboard.IsKeyPressed(_hold))
-                Action = ControllerAction.Hold;
+            else if (_inputManager.Keyboard.IsKeyPressed(_jump))
+                Action = ControllerAction.Jump;
         }
     }
 }
