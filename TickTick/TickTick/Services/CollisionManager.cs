@@ -10,7 +10,7 @@ namespace TickTick.Services
     /// <summary>
     /// Detects collisions and notifies objects of them
     /// </summary>
-    class CollisionManager
+    class CollisionManager : GameComponent
     {
         /// <summary>
         /// The list of objects that can collide
@@ -24,16 +24,18 @@ namespace TickTick.Services
         /// <summary>
         /// Creates a new CollisionManger
         /// </summary>
-        public CollisionManager()
+        public CollisionManager(Game game) : base(game)
         {
             Colliders = new List<ICollidable>();
             CollisionPairs = new List<Tuple<ICollidable, ICollidable>>();
+
+            Game.Services.AddService(typeof(CollisionManager), this);
         }
 
         /// <summary>
         /// Calculates collisions and notifies objects
         /// </summary>
-        public void Update()
+        public override void Update(GameTime gameTime)
         {
             var cp = new List<Tuple<ICollidable, ICollidable>>();
             foreach (var t in CollisionPairs)
