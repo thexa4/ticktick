@@ -12,5 +12,10 @@ namespace TickTick.Drawing
         {
 
         }
+
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+        }
     }
 }
