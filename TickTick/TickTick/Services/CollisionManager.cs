@@ -30,6 +30,8 @@ namespace TickTick.Services
             CollisionPairs = new List<Tuple<ICollidable, ICollidable>>();
 
             Game.Services.AddService(typeof(CollisionManager), this);
+            // Update last to avoid drawing sprites in eachother
+            this.UpdateOrder = Int32.MaxValue;
         }
 
         /// <summary>
