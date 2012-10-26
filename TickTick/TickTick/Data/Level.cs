@@ -28,6 +28,11 @@ namespace TickTick.Data
         public string Description { get; set; }
 
         /// <summary>
+        /// The level after this
+        /// </summary>
+        public Level NextLevel { get; set; }
+
+        /// <summary>
         /// The internal representation of the level file
         /// </summary>
         protected char[,] _data;
