@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Level.cs" />
+    <Compile Include="Drawing\Actors\ICollidable.cs" />
     <Compile Include="Drawing\Actors\LevelSprite.cs" />
     <Compile Include="Drawing\Actors\Tile.cs" />
     <Compile Include="Drawing\Button.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Screens\LevelSelectScreen.cs" />
     <Compile Include="Screens\MenuScreen.cs" />
     <Compile Include="Screens\TitleScreen.cs" />
+    <Compile Include="Services\CollisionManager.cs" />
     <Compile Include="TickTickGame.cs" />
     <Compile Include="Services\AudioManager.cs" />
     <Compile Include="Services\ControllerAction.cs" />
