@@ -107,7 +107,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Drawing\Actors\Actor.cs" />
     <Compile Include="Data\Level.cs" />
     <Compile Include="Drawing\Actors\LevelSprite.cs" />
     <Compile Include="Drawing\Actors\Tile.cs" />
