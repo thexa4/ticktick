@@ -10,5 +10,14 @@ namespace TickTick.Services
     {
         protected List<ICollidable> Colliders { get; set; }
 
+        public void Add(ICollidable c)
+        {
+            Colliders.Add(c);
+        }
+
+        public void Remove(ICollidable c)
+        {
+            Colliders.Remove(c);
+        }
     }
 }

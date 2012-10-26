@@ -6,10 +6,9 @@ using Microsoft.Xna.Framework;
 
 namespace TickTick.Drawing.Actors
 {
-    class WalkingActor : Actor
+    class WalkingActor
     {
         public WalkingActor(Game game)
-            : base(game)
         {
 
         }

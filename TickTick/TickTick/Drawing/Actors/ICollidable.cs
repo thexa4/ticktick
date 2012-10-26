@@ -8,10 +8,10 @@ namespace TickTick.Drawing.Actors
 {
     interface ICollidable
     {
-        Vector2 Position;
-        Vector2 Size;
-        bool IsSolid;
-        bool IsPlatform;
+        Vector2 Position { get; set; }
+        Vector2 Size { get; set; }
+        bool IsSolid { get; set; }
+        bool IsPlatform { get; set; }
 
         void StartTouch(ICollidable collidee);
         void EndTouch(ICollidable collidee);
