@@ -14,6 +14,9 @@ namespace TickTick.Data
     /// </summary>
     public class Level
     {
+        public const int TileWidth = 72;
+        public const int TileHeight = 55;
+
         /// <summary>
         /// The Width of the level
         /// </summary>
@@ -94,6 +97,7 @@ namespace TickTick.Data
             for(int x = 0; x < Width; x++)
                 for (int y = 0; y < Height; y++)
                 {
+                    Vector2 position = new Vector2(x * TileWidth, y * TileHeight);
                     switch (this[x, y])
                     {
                         case '.':
@@ -105,6 +109,7 @@ namespace TickTick.Data
                             {
                                 IsSolid = true,
                                 IsPlatform = true,
+                                Position = position,
                             });
                             break;
                         case '+':
@@ -114,6 +119,7 @@ namespace TickTick.Data
                                 IsSolid = true,
                                 IsPlatform = true,
                                 IsHot = true,
+                                Position = position,
                             });
                             break;
                         case '@':
@@ -123,6 +129,7 @@ namespace TickTick.Data
                                 IsSolid = true,
                                 IsPlatform = true,
                                 IsIce = true,
+                                Position = position,
                             });
                             break;
                         case 'X':
@@ -141,6 +148,7 @@ namespace TickTick.Data
                             l.Add(new Tile(game, layer, "Graphics\\Tiles\\spr_wall")
                             {
                                 IsSolid = true,
+                                Position = position,
                             });
                             break;
                         case '^':
@@ -149,6 +157,7 @@ namespace TickTick.Data
                             {
                                 IsSolid = true,
                                 IsHot = true,
+                                Position = position,
                             });
                             break;
                         case '*':
@@ -157,6 +166,7 @@ namespace TickTick.Data
                             {
                                 IsSolid = true,
                                 IsIce = true,
+                                Position = position,
                             });
                             break;
                         default:
