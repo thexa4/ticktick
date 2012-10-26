@@ -304,7 +304,7 @@ namespace TickTick.Services
         public void AddScreen(GameScreen screen)
         {
             screen.ScreenManager = this;
-            screen.Game = this.Game;
+            screen.InputManager = this.InputManager;
 
             screen.Initialize();
 

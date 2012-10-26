@@ -12,39 +12,76 @@ namespace TickTick.Screens
     /// <summary>
     /// 
     /// </summary>
-    public class TitleScreen : GameScreen
+    public class TitleScreen : MenuScreen
     {
-        protected Sprite _background, _playButton, _helpButton;
+        protected Sprite _background;
+        protected Button _playButton, _helpButton, _quitButton;
         protected Int32 _menuIndex;
 
+        public TitleScreen(Game game) : base(game) { }
+
         /// <summary>
-        /// Loads all content for this screen
+        /// Initializes the screen
         /// </summary>
-        /// <param name="contentManager">ContentManager to load to</param>
-        public override void LoadContent(ContentManager contentManager)
+        public override void Initialize()
         {
-            base.LoadContent(contentManager);
+            // Add background
+            _background = new Sprite(this.Game, "Graphics/Backgrounds/spr_title");
+            this.Background.Add(_background);
 
-            _background = new Sprite(this.Game, "Graphics/Backgrounds/spr_title")
-            {
-                Position = Vector2.UnitY * - 100 + Vector2.UnitX * -50,
+            // Add buttons
+            _playButton = new Button(this.Game, this.InputManager, "Graphics/Sprites/spr_button_play");
+            _helpButton = new Button(this.Game, this.InputManager, "Graphics/Sprites/spr_button_help");
+            _quitButton = new Button(this.Game, this.InputManager, "Graphics/Sprites/spr_button_quit");
+            this.Foreground.Add(_playButton);
+            this.Foreground.Add(_helpButton);
+            this.Foreground.Add(_quitButton);
 
-            };
-            _background.Initialize();
-            _playButton = new TickTick.Drawing.Actors.LevelSprite(this.Game, null, "Graphics/Sprites/Flame/spr_flame@9");
-            _playButton.Initialize();
+            // Initialize sprites and load their textures
+            base.Initialize();
+
+            // Set the positions
+            _background.Position = Vector2.UnitY * -80 + Vector2.UnitX * (this.ScreenManager.ScreenWidth - _background.Texture.Width) / 2;
+            _playButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _playButton.Texture.Width) / 2, 440);
+            _helpButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _helpButton.Texture.Width) / 2, 500);
+            _quitButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _quitButton.Texture.Width) / 2, 560);
+
+            // Set on click actions
+            _playButton.OnClicked += new ButtonClickDelegate(_playButton_OnClicked);
+            _helpButton.OnClicked += new ButtonClickDelegate(_helpButton_OnClicked);
+            _quitButton.OnClicked += new ButtonClickDelegate(_quitButton_OnClicked);
         }
 
         /// <summary>
-        /// Update logic
+        /// Is called when the quit button is clicked
         /// </summary>
-        /// <param name="gameTime">Snapshot of timing values</param>
-        /// <param name="otherScreenHasFocus">Game is blurred</param>
-        /// <param name="coveredByOtherScreen">Other GameScreen is active</param>
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        /// <param name="button">Reference to the clicked button</param>
+        /// <param name="relativePosition">Position on the button clicked</param>
+        protected void _quitButton_OnClicked(Button button, Vector2 relativePosition)
         {
-            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-            _playButton.Update(gameTime);
+            this.ExitScreen();
+        }
+
+        /// <summary>
+        /// Is called when the help button is clicked
+        /// </summary>
+        /// <param name="button">Reference to the clicked button</param>
+        /// <param name="relativePosition">Position on the button clicked</param>
+        protected void _helpButton_OnClicked(Button button, Vector2 relativePosition)
+        {
+            this.ScreenManager.AddScreen(new HelpScreen(this.Game));
+            this.ExitScreen();
+        }
+
+        /// <summary>
+        /// Is called when the play button is clicked
+        /// </summary>
+        /// <param name="button">Reference to the clicked button</param>
+        /// <param name="relativePosition">Position on the button clicked</param>
+        protected void _playButton_OnClicked(Button button, Vector2 relativePosition)
+        {
+            this.ScreenManager.AddScreen(new LevelSelectScreen(this.Game));
+            this.ExitScreen();
         }
 
         /// <summary>
@@ -55,41 +92,27 @@ namespace TickTick.Screens
         {
             base.HandleInput(gameTime);
 
+            // Keyboard (simulate clicking them)
             if (this.InputManager.Keyboard.IsKeyReleased(Keys.Enter))
             {
                 switch (_menuIndex)
                 {
                     case 0:
-                        this.ScreenManager.AddScreen(new TitleScreen());
+                        _playButton_OnClicked(_playButton, Vector2.Zero);
                         break;
                     case 1:
-                        this.ScreenManager.AddScreen(new TitleScreen());
+                        _helpButton_OnClicked(_helpButton, Vector2.Zero);
+                        break;
+                    case 2:
+                        _quitButton_OnClicked(_quitButton, Vector2.Zero);
                         break;
                 }
-                
-                this.ExitScreen();
             }
             else if (this.InputManager.Keyboard.IsKeyReleased(Keys.Escape))
             {
+                // Exit game
                 this.ExitScreen();
             }
-        }
-
-        /// <summary>
-        /// Draws frame
-        /// </summary>
-        /// <param name="gameTime">Snapshot of timing values</param>
-        public override void Draw(GameTime gameTime)
-        {
-            if (this.ScreenState != Services.ScreenState.Active)
-                return;
-
-            base.Draw(gameTime);
-
-            this.ScreenManager.SpriteBatch.Begin();
-            _background.Draw(gameTime);
-            _playButton.Draw(gameTime);
-            this.ScreenManager.SpriteBatch.End();
         }
     }
 }

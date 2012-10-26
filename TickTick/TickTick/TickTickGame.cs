@@ -73,6 +73,7 @@ namespace TickTick
             this.Graphics.PreferredBackBufferHeight = 720;
             this.Graphics.PreferredBackBufferWidth = 1280;
             this.Graphics.SupportedOrientations = DisplayOrientation.Default;
+            this.IsMouseVisible = true;
 
 #if DEBUG
             // Unlimted FPS
@@ -116,7 +117,7 @@ namespace TickTick
             // Initialize all components
             base.Initialize();
 
-            this.ScreenManager.AddScreen(new TitleScreen());
+            this.ScreenManager.AddScreen(new TitleScreen(this));
         }
 
         /// <summary>

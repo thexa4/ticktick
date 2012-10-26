@@ -105,6 +105,15 @@ namespace TickTick.Services
         #endregion
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="game"></param>
+        public GameScreen(Game game)
+        {
+            _gameReference = game;
+        }
+
+        /// <summary>
         /// Initializes Screen, sets Variables
         /// </summary>
         public virtual void Initialize()
