@@ -30,6 +30,12 @@ namespace TickTick.Services
         public Int32 Count { get { return _screens == null ? 0 : _screens.Count; } }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public Random Random = new Random();
+
+
+        /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
         /// <param name="game">Game Reference</param>

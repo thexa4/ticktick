@@ -36,7 +36,7 @@ namespace TickTick.Screens
             for (Int32 i = 0; i < Levels; i++)
             {
                 var assetName = String.Format("Graphics/Sprites/spr_level_{0}", "unsolved");
-                _levelButtons[i] = new LevelButton(this.Game, this.InputManager, assetName);
+                _levelButtons[i] = new LevelButton(this.Game, this.InputManager, assetName, String.Format("Content/Levels/{0}.txt",  i+1));
                 _levelButtons[i].Enabled = true;
                 this.Foreground.Add(_levelButtons[i]);
             }
@@ -81,7 +81,8 @@ namespace TickTick.Screens
         /// <param name="relativePosition"></param>
         protected void  LevelSelectScreen_OnClicked(Button button, Vector2 relativePosition)
         {
- 	        
+            var levelButton = button as LevelButton;
+            this.ScreenManager.AddScreen(new LevelScreen(this.Game, levelButton.Level));
         }
 
     }

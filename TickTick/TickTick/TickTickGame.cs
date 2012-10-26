@@ -56,6 +56,15 @@ namespace TickTick
             private set;
         }
 
+        /// <summary>
+        /// ColiisionManager hook
+        /// </summary>
+        internal CollisionManager CollisionManager
+        {
+            get;
+            private set;
+        }
+
         #region FRAMERATE
         private TimeSpan _elapsedTime;
         private Int32 _frameCount, _frameRate;
@@ -100,6 +109,7 @@ namespace TickTick
             this.InputManager = new InputManager(this);
             this.ScreenManager = new ScreenManager(this);
             this.AudioManager = new AudioManager(this);
+            this.CollisionManager = new CollisionManager(this);
         }
 
         /// <summary>
@@ -113,6 +123,7 @@ namespace TickTick
             this.Components.Add(this.InputManager);
             this.Components.Add(this.ScreenManager);
             this.Components.Add(this.AudioManager);
+            this.Components.Add(this.CollisionManager);
 
             // Initialize all components
             base.Initialize();

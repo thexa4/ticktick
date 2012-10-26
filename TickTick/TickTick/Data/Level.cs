@@ -63,9 +63,7 @@ namespace TickTick.Data
         /// <returns>The level</returns>
         public static Level ReadLevel(string path)
         {
-            var f = new FileInfo(path);
-            FileStream stream = f.OpenRead();
-            StreamReader reader = new StreamReader(stream);
+            StreamReader reader = new StreamReader(TitleContainer.OpenStream(path));
 
             int width = 20;
             int height = 15;
@@ -98,7 +96,7 @@ namespace TickTick.Data
                             break;
                         case '-':
                             // Normal platform
-                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_platform")
+                            l.Add(new Tile(game, layer, "Graphics\\Tiles\\spr_platform")
                             {
                                 IsSolid = true,
                                 IsPlatform = true,
@@ -106,7 +104,7 @@ namespace TickTick.Data
                             break;
                         case '+':
                             // Hot platform
-                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_platform_hot")
+                            l.Add(new Tile(game, layer, "Graphics\\Tiles\\spr_platform_hot")
                             {
                                 IsSolid = true,
                                 IsPlatform = true,
@@ -115,7 +113,7 @@ namespace TickTick.Data
                             break;
                         case '@':
                             // Hot platform
-                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_platform_ice")
+                            l.Add(new Tile(game, layer, "Graphics\\Tiles\\spr_platform_ice")
                             {
                                 IsSolid = true,
                                 IsPlatform = true,
@@ -135,14 +133,14 @@ namespace TickTick.Data
                             break;
                         case '#':
                             // Wall tile
-                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_wall")
+                            l.Add(new Tile(game, layer, "Graphics\\Tiles\\spr_wall")
                             {
                                 IsSolid = true,
                             });
                             break;
                         case '^':
                             // Wall tile hot
-                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_wall_hot")
+                            l.Add(new Tile(game, layer, "Graphics\\Tiles\\spr_wall_hot")
                             {
                                 IsSolid = true,
                                 IsHot = true,
@@ -150,7 +148,7 @@ namespace TickTick.Data
                             break;
                         case '*':
                             // Wall tile ice
-                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_wall_ice")
+                            l.Add(new Tile(game, layer, "Graphics\\Tiles\\spr_wall_ice")
                             {
                                 IsSolid = true,
                                 IsIce = true,
