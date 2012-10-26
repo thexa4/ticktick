@@ -9,6 +9,8 @@ namespace TickTick.Drawing.Actors
 {
     class WalkingActor : LevelSprite, ICollidable
     {
+        const float Gravity = 1f;
+
         public bool IsSolid { get; set; }
         public bool IsPlatform { get; set; }
         public Vector2 Size { get; set; }
@@ -18,6 +20,13 @@ namespace TickTick.Drawing.Actors
         {
             // Add itself to collision manager
             ((CollisionManager)Game.Services.GetService(typeof(CollisionManager))).Add(this);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            Velocity = Velocity + Vector2.UnitY * Gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Position = Position + Velocity;
+            base.Update(gameTime);
         }
 
         public void StartTouch(ICollidable collider)

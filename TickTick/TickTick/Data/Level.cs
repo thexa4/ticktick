@@ -139,9 +139,13 @@ namespace TickTick.Data
                         case 'W':
                             // Water tile
                             //TODO: Add watertile loader
+                            break;
                         case '1':
                             // Player tile
-                            //TODO: Add player loader
+                            l.Add(new Player(game, layer)
+                            {
+                                Position = position,
+                            });
                             break;
                         case '#':
                             // Wall tile

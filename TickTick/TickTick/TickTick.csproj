@@ -111,7 +111,9 @@
     <Compile Include="Data\PlayerController.cs" />
     <Compile Include="Drawing\Actors\ICollidable.cs" />
     <Compile Include="Drawing\Actors\LevelSprite.cs" />
+    <Compile Include="Drawing\Actors\Player.cs" />
     <Compile Include="Drawing\Actors\Tile.cs" />
+    <Compile Include="Drawing\Actors\WalkingActor.cs" />
     <Compile Include="Drawing\Button.cs" />
     <Compile Include="Drawing\Clouds.cs" />
     <Compile Include="Drawing\Layer.cs" />
