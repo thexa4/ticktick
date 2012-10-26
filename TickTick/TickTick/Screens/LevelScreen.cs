@@ -6,6 +6,7 @@ using TickTick.Data;
 using Microsoft.Xna.Framework;
 using TickTick.Services;
 using TickTick.Drawing;
+using TickTick.Drawing.Actors;
 
 namespace TickTick.Screens
 {
@@ -13,6 +14,7 @@ namespace TickTick.Screens
     {
         protected Level _levelData;
         protected Layer _background, _foreground, _overlay;
+        protected PlayerController _playerController;
 
         /// <summary>
         /// 
@@ -59,7 +61,11 @@ namespace TickTick.Screens
             // Get the tiles
             var tiles = _levelData.GenerateComponents(this.Game, _foreground);
             foreach (var tile in tiles)
+            {
                 _foreground.Add(tile);
+                if (tile.GetType() == typeof(Player))
+                    _playerController = new PlayerController(Game, tile as Player);
+            }
 
             base.Initialize();
             _background.Initialize();
@@ -111,6 +117,12 @@ namespace TickTick.Screens
             _background.Draw(gameTime);
             _foreground.Draw(gameTime);
             _overlay.Draw(gameTime);
+        }
+
+        public override void HandleInput(GameTime gameTime)
+        {
+            base.HandleInput(gameTime);
+            _playerController.UpdateInput(gameTime);
         }
     }
 }

@@ -11,7 +11,6 @@ namespace TickTick.Drawing.Actors
     {
         public bool IsSolid { get; set; }
         public bool IsPlatform { get; set; }
-        public Vector2 Size { get; set; }
         public Vector2 Velocity { get; set; }
 
         public bool IsHot { get; set; }

@@ -7,24 +7,32 @@ using TickTick.Services;
 
 namespace TickTick.Drawing.Actors
 {
-    class WalkingActor : LevelSprite, ICollidable
+    public class WalkingActor : LevelSprite, ICollidable
     {
         const float Gravity = 1f;
 
         public bool IsSolid { get; set; }
         public bool IsPlatform { get; set; }
-        public Vector2 Size { get; set; }
         public Vector2 Velocity { get; set; }
+        public Vector2 MaxVelocity { get; set; }
 
         public WalkingActor(Game game, Layer layer, string assetname) : base(game, layer, assetname)
         {
             // Add itself to collision manager
             ((CollisionManager)Game.Services.GetService(typeof(CollisionManager))).Add(this);
+
+            MaxVelocity = new Vector2(10, 10);
         }
 
         public override void Update(GameTime gameTime)
         {
             Velocity = Velocity + Vector2.UnitY * Gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            Velocity = new Vector2(
+                MathHelper.Clamp(Velocity.X, -MaxVelocity.X, MaxVelocity.X),
+                MathHelper.Clamp(Velocity.Y, -MaxVelocity.Y, MaxVelocity.Y)
+            );
+
             Position = Position + Velocity;
             base.Update(gameTime);
         }

@@ -144,7 +144,7 @@ namespace TickTick.Data
                             // Player tile
                             l.Add(new Player(game, layer)
                             {
-                                Position = position,
+                                Position = position - Vector2.UnitY * TileHeight,
                             });
                             break;
                         case '#':

@@ -49,7 +49,7 @@ namespace TickTick.Drawing
         /// <summary>
         /// The size of the texture
         /// </summary>
-        public Vector2 Size { get; protected set; }
+        public Vector2 Size { get; set; }
 
         /// <summary>
         /// The source rectangle
@@ -107,8 +107,7 @@ namespace TickTick.Drawing
             if (this.SourceRectangle == Rectangle.Empty)
                 this.SourceRectangle = new Rectangle(0, 0, this.Texture.Width, this.Texture.Height);
 
-            if (this.Size == Vector2.Zero)
-                this.Size = new Vector2(this.Texture.Width, this.Texture.Height) * Scale;
+            this.Size = new Vector2(this.Texture.Width, this.Texture.Height) * Scale;
         }
 
         /// <summary>
@@ -130,8 +129,9 @@ namespace TickTick.Drawing
         /// <param name="spriteBatch">The current spritebatch</param>
         public virtual void DrawSprite(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(this.Texture, this.Position, this.SourceRectangle, this.Color, 0, 
-                this.Origin, this.Scale, this.SpriteEffect, 0);
+            Rectangle dest = new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y);
+            spriteBatch.Draw(this.Texture, dest, this.SourceRectangle, this.Color, 0, 
+                this.Origin, this.SpriteEffect, 0);
         }
     }
 }

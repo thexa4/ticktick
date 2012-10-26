@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace TickTick.Drawing.Actors
 {
-    interface ICollidable
+    public interface ICollidable
     {
         Vector2 Position { get; set; }
         Vector2 Velocity { get; set; }

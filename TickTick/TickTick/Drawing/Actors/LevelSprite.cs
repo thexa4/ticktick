@@ -92,6 +92,7 @@ namespace TickTick.Drawing.Actors
         {
             base.LoadContent(contentManager);
             this.Frame = this.Frame; // calls set function of property;
+            this.Size = new Vector2(Texture.Width / Columns, Texture.Height / Rows) * Scale;
         }
 
         /// <summary>
