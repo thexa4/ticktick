@@ -32,12 +32,17 @@ namespace TickTick.Screens
             this.Background.Add(_background);
 
             // add the level buttons
+            var levelUnlocks = TickTick.Data.Level.ReadLevelUnlocks("Levels/progress.txt");
             _levelButtons = new Button[Levels];
             for (Int32 i = 0; i < Levels; i++)
             {
-                var assetName = String.Format("Graphics/Sprites/spr_level_{0}", "unsolved");
+                var assetName = String.Format("Graphics/Sprites/spr_level_{0}", 
+                    levelUnlocks[i].Solved ? "solved" : 
+                        (levelUnlocks[i].Unlocked ? "unsolved" : "locked")
+                    );
+
                 _levelButtons[i] = new LevelButton(this.Game, this.InputManager, assetName, String.Format("Content/Levels/{0}.txt",  i+1));
-                _levelButtons[i].Enabled = true;
+                _levelButtons[i].Enabled = levelUnlocks[i].Unlocked;
                 this.Foreground.Add(_levelButtons[i]);
             }
 

@@ -12,7 +12,7 @@ namespace TickTick.Data
     /// <summary>
     /// Represents a level
     /// </summary>
-    public class Level
+    public partial class Level
     {
         public const int TileWidth = 72;
         public const int TileHeight = 55;

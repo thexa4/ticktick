@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Level.Unlockable.cs" />
     <Compile Include="Data\Level.cs" />
     <Compile Include="Data\PlayerController.cs" />
     <Compile Include="Drawing\Actors\ICollidable.cs" />
