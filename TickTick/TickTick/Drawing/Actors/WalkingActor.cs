@@ -15,6 +15,7 @@ namespace TickTick.Drawing.Actors
         public bool IsPlatform { get; set; }
         public Vector2 Velocity { get; set; }
         public Vector2 MaxVelocity { get; set; }
+        public bool IsFalling { get; set; }
 
         public WalkingActor(Game game, Layer layer, string assetname) : base(game, layer, assetname)
         {
@@ -22,11 +23,13 @@ namespace TickTick.Drawing.Actors
             ((CollisionManager)Game.Services.GetService(typeof(CollisionManager))).Add(this);
 
             MaxVelocity = new Vector2(10, 10);
+            IsFalling = true;
         }
 
         public override void Update(GameTime gameTime)
         {
-            Velocity = Velocity + Vector2.UnitY * Gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if(IsFalling)
+                Velocity = Velocity + Vector2.UnitY * Gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Velocity = new Vector2(
                 MathHelper.Clamp(Velocity.X, -MaxVelocity.X, MaxVelocity.X),
@@ -41,6 +44,9 @@ namespace TickTick.Drawing.Actors
         {
             if (!collider.IsSolid)
                 return;
+
+            if(IsBelow(collider))
+                IsFalling = false;
 
             MoveOut(collider);
             if (IsAbove(collider) && Velocity.Y < 0 && !collider.IsPlatform)
@@ -58,7 +64,7 @@ namespace TickTick.Drawing.Actors
 
         public void EndTouch(ICollidable collider)
         {
-
+            IsFalling = true;
         }
 
         protected bool IsBelow(ICollidable collider)
@@ -102,21 +108,15 @@ namespace TickTick.Drawing.Actors
 
         public void MoveOut(ICollidable collider)
         {
-            if (Math.Abs(Velocity.X) > Math.Abs(Velocity.Y))
-            {
-                MoveXOut(collider);
+            //if (IsAbove(collider) || IsBelow(collider))
                 MoveYOut(collider);
-            }
-            else
-            {
-                MoveYOut(collider);
+            //if (IsLeft(collider) || IsRight(collider))
                 MoveXOut(collider);
-            }
         }
 
         protected void MoveYOut(ICollidable collider)
         {
-            if (Velocity.Y == 0)
+            if (Velocity.Y == 0 || !CollisionManager.Collides(this, collider))
                 return;
 
             float dy = 0;
@@ -131,7 +131,7 @@ namespace TickTick.Drawing.Actors
 
         protected void MoveXOut(ICollidable collider)
         {
-            if(Velocity.X == 0)
+            if(Velocity.X == 0 || !CollisionManager.Collides(this, collider))
                 return;
 
             float dx = 0;

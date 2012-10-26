@@ -64,7 +64,10 @@ namespace TickTick.Screens
             {
                 _foreground.Add(tile);
                 if (tile.GetType() == typeof(Player))
+                {
                     _playerController = new PlayerController(Game, tile as Player);
+                    _playerController.Initialize();
+                }
             }
 
             base.Initialize();

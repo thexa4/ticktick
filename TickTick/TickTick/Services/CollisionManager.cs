@@ -78,7 +78,7 @@ namespace TickTick.Services
         /// <param name="a">The first object</param>
         /// <param name="b">The second object</param>
         /// <returns>Wether a collision is taking place</returns>
-        public bool Collides(ICollidable a, ICollidable b)
+        public static bool Collides(ICollidable a, ICollidable b)
         {
             Rectangle ra = new Rectangle((int)a.Position.X, (int)a.Position.Y, (int)a.Size.X, (int)a.Size.Y);
             Rectangle rb = new Rectangle((int)b.Position.X, (int)b.Position.Y, (int)b.Size.X, (int)b.Size.Y);
