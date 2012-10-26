@@ -64,10 +64,8 @@ namespace TickTick.Screens
 
             base.Draw(gameTime);
 
-            //this.ScreenManager.SpriteBatch.Begin();
             this.Background.Draw(gameTime);
             this.Foreground.Draw(gameTime);
-            //this.ScreenManager.SpriteBatch.End();
         }
     }
 }

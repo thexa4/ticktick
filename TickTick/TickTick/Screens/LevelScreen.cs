@@ -50,7 +50,7 @@ namespace TickTick.Screens
 
             // Add the time
             _overlay.Add(new Sprite(this.Game, "Graphics/Sprites/spr_timer") { Position = Vector2.One * 10 });
-            _overlay.Add(new TimerDisplay(this.Game, "Graphics/Sprites/spr_timer") { Position = new Vector2(25, 30) });
+            _overlay.Add(new TimerDisplay(this.Game, "Graphics/Sprites/spr_timer")); //{ Position = new Vector2(25, 30) });
 
             // Add the quit button
             var quitButton = new Button(this.Game, this.InputManager, "Graphics/Sprites/spr_button_quit");

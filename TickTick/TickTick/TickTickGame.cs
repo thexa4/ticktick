@@ -79,8 +79,8 @@ namespace TickTick
             this.Graphics = new GraphicsDeviceManager(this);
 
             this.Graphics.PreferredBackBufferFormat = SurfaceFormat.Color;
-            this.Graphics.PreferredBackBufferHeight = 720;
-            this.Graphics.PreferredBackBufferWidth = 1280;
+            this.Graphics.PreferredBackBufferWidth = 1440;//1280;
+            this.Graphics.PreferredBackBufferHeight = 825;//720;
             this.Graphics.SupportedOrientations = DisplayOrientation.Default;
             this.IsMouseVisible = true;
 
@@ -203,9 +203,9 @@ namespace TickTick
 
             this.SpriteBatch.Begin();
             this.SpriteBatch.DrawString(this.ScreenManager.SpriteFonts["Framerate"], framerateString,
-                Vector2.One * 6 + Vector2.UnitX * (1280 - 10 - this.ScreenManager.SpriteFonts["Framerate"].MeasureString(framerateString).X), Color.Black);
+                Vector2.One * 6 + Vector2.UnitX * (this.Graphics.PreferredBackBufferWidth - 10 - this.ScreenManager.SpriteFonts["Framerate"].MeasureString(framerateString).X), Color.Black);
             this.SpriteBatch.DrawString(this.ScreenManager.SpriteFonts["Framerate"], framerateString,
-                Vector2.One * 5 + Vector2.UnitX * (1280 - 10 - this.ScreenManager.SpriteFonts["Framerate"].MeasureString(framerateString).X), Color.White);
+                Vector2.One * 5 + Vector2.UnitX * (this.Graphics.PreferredBackBufferWidth - 10 - this.ScreenManager.SpriteFonts["Framerate"].MeasureString(framerateString).X), Color.White);
             this.SpriteBatch.End();
         }
     }

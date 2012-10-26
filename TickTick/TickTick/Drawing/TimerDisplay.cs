@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework;
 
 namespace TickTick.Drawing
 {
-    public class TimerDisplay : Sprite
+    public class TimerDisplay : DrawableGameComponent
     {
-        public TimerDisplay(Game game, String assetName) : base(game, assetName)
+        public TimerDisplay(Game game, String assetName) : base(game)
         {
 
         }

@@ -54,12 +54,12 @@ namespace TickTick.Screens
                 int column = i % 4;
 
                 _levelButtons[i].Position = new Vector2(column * (_levelButtons[i].Texture.Width + 20),
-                    row * (_levelButtons[i].Texture.Height + 20)) + new Vector2(310, 120);
+                    row * (_levelButtons[i].Texture.Height + 20)) + new Vector2(390 /*310*/, 180/*120*/);
                 _levelButtons[i].OnClicked += new ButtonClickDelegate(LevelSelectScreen_OnClicked);
             }
 
-            _background.Position = Vector2.UnitY * -50 + Vector2.UnitX * (this.ScreenManager.ScreenWidth - _background.Texture.Width) / 2;
-            _backButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _backButton.Texture.Width) / 2, 650);
+            _background.Position = /*Vector2.UnitY * -50 +*/ Vector2.UnitX * (this.ScreenManager.ScreenWidth - _background.Texture.Width) / 2;
+            _backButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _backButton.Texture.Width) / 2, 680/*650*/);
             _backButton.OnClicked += new ButtonClickDelegate(_backButton_OnClicked);
         }
 

@@ -40,8 +40,8 @@ namespace TickTick.Screens
             base.Initialize();
 
             // Set the positions
-            _background.Position = Vector2.UnitY * -50 + Vector2.UnitX * (this.ScreenManager.ScreenWidth - _background.Texture.Width) / 2;
-            _backButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _backButton.Texture.Width) / 2, 650);
+            _background.Position = /*Vector2.UnitY * -50 +*/ Vector2.UnitX * (this.ScreenManager.ScreenWidth - _background.Texture.Width) / 2;
+            _backButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _backButton.Texture.Width) / 2, 720/*650*/);
 
             _backButton.OnClicked += new ButtonClickDelegate(_backButton_OnClicked);
         }

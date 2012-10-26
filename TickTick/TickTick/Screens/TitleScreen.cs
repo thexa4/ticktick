@@ -41,10 +41,10 @@ namespace TickTick.Screens
             base.Initialize();
 
             // Set the positions
-            _background.Position = Vector2.UnitY * -80 + Vector2.UnitX * (this.ScreenManager.ScreenWidth - _background.Texture.Width) / 2;
-            _playButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _playButton.Texture.Width) / 2, 440);
-            _helpButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _helpButton.Texture.Width) / 2, 500);
-            _quitButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _quitButton.Texture.Width) / 2, 560);
+            _background.Position = Vector2.UnitY * 0/*-80*/ + Vector2.UnitX * (this.ScreenManager.ScreenWidth - _background.Texture.Width) / 2;
+            _playButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _playButton.Texture.Width) / 2, 500/*440*/);
+            _helpButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _helpButton.Texture.Width) / 2, 560/*500*/);
+            _quitButton.Position = new Vector2((this.ScreenManager.ScreenWidth - _quitButton.Texture.Width) / 2, 620/*560*/);
 
             // Set on click actions
             _playButton.OnClicked += new ButtonClickDelegate(_playButton_OnClicked);
