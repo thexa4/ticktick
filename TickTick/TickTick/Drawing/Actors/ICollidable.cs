@@ -13,6 +13,7 @@ namespace TickTick.Drawing.Actors
         bool IsSolid;
         bool IsPlatform;
 
-        void HandleCollision(ICollidable collidee);
+        void StartTouch(ICollidable collidee);
+        void EndTouch(ICollidable collidee);
     }
 }
