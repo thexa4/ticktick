@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Microsoft.Xna.Framework;
+using TickTick.Drawing.Actors;
+using TickTick.Drawing;
 
 namespace TickTick.Data
 {
@@ -79,6 +82,86 @@ namespace TickTick.Data
             level.Description = reader.ReadLine();
 
             return level;
+        }
+
+        public List<DrawableGameComponent> GenerateComponents(Game game, Layer layer)
+        {
+            var l = new List<DrawableGameComponent>();
+
+            for(int x = 0; x < Width; x++)
+                for (int y = 0; y < Height; y++)
+                {
+                    switch (this[x, y])
+                    {
+                        case '.':
+                            // Background, draw nothing
+                            break;
+                        case '-':
+                            // Normal platform
+                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_platform")
+                            {
+                                IsSolid = true,
+                                IsPlatform = true,
+                            });
+                            break;
+                        case '+':
+                            // Hot platform
+                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_platform_hot")
+                            {
+                                IsSolid = true,
+                                IsPlatform = true,
+                                IsHot = true,
+                            });
+                            break;
+                        case '@':
+                            // Hot platform
+                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_platform_ice")
+                            {
+                                IsSolid = true,
+                                IsPlatform = true,
+                                IsIce = true,
+                            });
+                            break;
+                        case 'X':
+                            // End tile
+                            //TODO: Add endtile loader
+                            break;
+                        case 'W':
+                            // Water tile
+                            //TODO: Add watertile loader
+                        case '1':
+                            // Player tile
+                            //TODO: Add player loader
+                            break;
+                        case '#':
+                            // Wall tile
+                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_wall")
+                            {
+                                IsSolid = true,
+                            });
+                            break;
+                        case '^':
+                            // Wall tile hot
+                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_wall_hot")
+                            {
+                                IsSolid = true,
+                                IsHot = true,
+                            });
+                            break;
+                        case '*':
+                            // Wall tile ice
+                            l.Add(new Tile(game, layer, "Graphics\\Sprites\\spr_wall_ice")
+                            {
+                                IsSolid = true,
+                                IsIce = true,
+                            });
+                            break;
+                        default:
+                            throw new NotImplementedException("Error loading: " + this[x, y]);
+                    }
+                }
+
+            return l;
         }
     }
 }
