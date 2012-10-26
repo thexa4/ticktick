@@ -47,6 +47,11 @@ namespace TickTick.Drawing
         public Vector2 Scale { get; set; }
 
         /// <summary>
+        /// The size of the texture
+        /// </summary>
+        public Vector2 Size { get; protected set; }
+
+        /// <summary>
         /// The source rectangle
         /// </summary>
         public Rectangle SourceRectangle { get; set; }
@@ -101,6 +106,9 @@ namespace TickTick.Drawing
 
             if (this.SourceRectangle == Rectangle.Empty)
                 this.SourceRectangle = new Rectangle(0, 0, this.Texture.Width, this.Texture.Height);
+
+            if (this.Size == Vector2.Zero)
+                this.Size = new Vector2(this.Texture.Width, this.Texture.Height) * Scale;
         }
 
         /// <summary>
