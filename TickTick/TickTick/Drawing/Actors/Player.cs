@@ -11,7 +11,6 @@ namespace TickTick.Drawing.Actors
         public Player(Game game, Layer layer)
             : base(game, layer, "Graphics/Sprites/Player/spr_idle")
         {
-
         }
     }
 }

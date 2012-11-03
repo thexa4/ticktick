@@ -107,14 +107,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Level.Generate.cs" />
     <Compile Include="Data\Level.Unlockable.cs" />
     <Compile Include="Data\Level.cs" />
+    <Compile Include="Data\LevelState.cs" />
     <Compile Include="Data\PlayerController.cs" />
     <Compile Include="Drawing\Actors\ICollidable.cs" />
     <Compile Include="Drawing\Actors\LevelSprite.cs" />
     <Compile Include="Drawing\Actors\Player.cs" />
     <Compile Include="Drawing\Actors\Tile.cs" />
     <Compile Include="Drawing\Actors\WalkingActor.cs" />
+    <Compile Include="Drawing\Actors\Water.cs" />
     <Compile Include="Drawing\Button.cs" />
     <Compile Include="Drawing\Clouds.cs" />
     <Compile Include="Drawing\Layer.cs" />

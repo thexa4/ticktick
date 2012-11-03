@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TickTick.Screens;
 using TickTick.Services;
+using Microsoft.Xna.Framework.Input;
 
 namespace TickTick
 {
@@ -65,6 +66,12 @@ namespace TickTick
             private set;
         }
 
+        internal KeyboardController KeyboardController
+        {
+            get;
+            private set;
+        }
+
         #region FRAMERATE
         private TimeSpan _elapsedTime;
         private Int32 _frameCount, _frameRate;
@@ -110,6 +117,7 @@ namespace TickTick
             this.ScreenManager = new ScreenManager(this);
             this.AudioManager = new AudioManager(this);
             this.CollisionManager = new CollisionManager(this);
+            this.KeyboardController = new KeyboardController(this, Keys.W, Keys.A, Keys.D);
         }
 
         /// <summary>
@@ -124,6 +132,7 @@ namespace TickTick
             this.Components.Add(this.ScreenManager);
             this.Components.Add(this.AudioManager);
             this.Components.Add(this.CollisionManager);
+            this.Components.Add(this.KeyboardController);
 
             // Initialize all components
             base.Initialize();

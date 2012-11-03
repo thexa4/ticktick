@@ -9,6 +9,7 @@ namespace TickTick.Services
     /// ControllerAction is the result enumeration for the Controller classes
     /// which handle input.
     /// </summary>
+    [Flags]
     public enum ControllerAction : byte
     {
         None = 0,

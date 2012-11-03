@@ -23,17 +23,17 @@ namespace TickTick.Drawing.Actors
             ((CollisionManager)Game.Services.GetService(typeof(CollisionManager))).Add(this);
         }
 
-        public void StartTouch(ICollidable collider)
+        public virtual void StartTouch(ICollidable collider)
         {
 
         }
 
-        public void EndTouch(ICollidable collider)
+        public virtual void EndTouch(ICollidable collider)
         {
 
         }
 
-        public void ProcessTouches(List<ICollidable> colliders)
+        public virtual void ProcessTouches(List<ICollidable> colliders)
         {
 
         }
