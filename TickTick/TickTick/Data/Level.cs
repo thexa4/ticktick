@@ -107,7 +107,7 @@ namespace TickTick.Data
                             // Normal platform
                             l.Add(new Tile(game, layer, "Graphics\\Tiles\\spr_platform")
                             {
-                                IsSolid = true,
+                                IsSolid = false,
                                 IsPlatform = true,
                                 Position = position,
                             });
@@ -116,17 +116,17 @@ namespace TickTick.Data
                             // Hot platform
                             l.Add(new Tile(game, layer, "Graphics\\Tiles\\spr_platform_hot")
                             {
-                                IsSolid = true,
+                                IsSolid = false,
                                 IsPlatform = true,
                                 IsHot = true,
                                 Position = position,
                             });
                             break;
                         case '@':
-                            // Hot platform
+                            // Ice platform
                             l.Add(new Tile(game, layer, "Graphics\\Tiles\\spr_platform_ice")
                             {
-                                IsSolid = true,
+                                IsSolid = false,
                                 IsPlatform = true,
                                 IsIce = true,
                                 Position = position,

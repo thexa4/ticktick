@@ -17,6 +17,7 @@ namespace TickTick.Data
         public Player Player { get; protected set; }
 
         public const float MoveSpeed = 10;
+        public const float JumpSpeed = 4;
 
         public PlayerController(Game game, Player player)
             : base(game)
@@ -35,6 +36,8 @@ namespace TickTick.Data
                 Player.Velocity = Player.Velocity - Vector2.UnitX * MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (_input.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right))
                 Player.Velocity = Player.Velocity + Vector2.UnitX * MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (!Player.IsFalling && _input.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Up))
+                Player.Velocity = Player.Velocity * Vector2.UnitX - Vector2.UnitY * JumpSpeed;
         }
     }
 }

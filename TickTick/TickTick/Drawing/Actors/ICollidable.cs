@@ -15,6 +15,7 @@ namespace TickTick.Drawing.Actors
         bool IsPlatform { get; set; }
 
         void StartTouch(ICollidable collidee);
+        void ProcessTouches(List<ICollidable> collidees);
         void EndTouch(ICollidable collidee);
     }
 }

@@ -32,5 +32,10 @@ namespace TickTick.Drawing.Actors
         {
 
         }
+
+        public void ProcessTouches(List<ICollidable> colliders)
+        {
+
+        }
     }
 }

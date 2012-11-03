@@ -16,6 +16,7 @@ namespace TickTick.Services
         /// The list of objects that can collide
         /// </summary>
         protected List<ICollidable> Colliders { get; set; }
+
         /// <summary>
         /// The list of objects currently touching
         /// </summary>
@@ -70,6 +71,16 @@ namespace TickTick.Services
                         }
                     }
                 }
+
+            foreach (var col in Colliders)
+            {
+                // Get all colliders this collider collides with.
+                var cols = CollisionPairs.Where((x) => x.Item1 == col).Select((x) => x.Item2).Concat(
+                        CollisionPairs.Where((x) => x.Item2 == col).Select((x) => x.Item1)
+                    ).ToList();
+                if (cols.Count > 0)
+                    col.ProcessTouches(cols);
+            }
         }
 
         /// <summary>
