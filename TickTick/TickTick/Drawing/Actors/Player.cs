@@ -12,6 +12,8 @@ namespace TickTick.Drawing.Actors
         Dictionary<string, Texture2D> _textures { get; set; }
         Dictionary<string, string> _assets { get; set; }
 
+        protected Data.LevelState _levelState;
+
         /// <summary>
         /// Collidedwith 
         /// </summary>
@@ -37,10 +39,12 @@ namespace TickTick.Drawing.Actors
         /// </summary>
         /// <param name="game">Game to bind to</param>
         /// <param name="layer">Layer to draw to</param>
-        public Player(Game game, Layer layer)
+        /// <param name="state">The Level State</param>
+        public Player(Game game, Layer layer, Data.LevelState state)
             : base(game, layer, "Graphics/Sprites/Player/spr_idle")
         {
             _textures = new Dictionary<string, Texture2D>();
+            _levelState = state;
         }
 
         /// <summary>
@@ -63,6 +67,8 @@ namespace TickTick.Drawing.Actors
                 }
                 else if (Velocity.Y < 0)
                     SetTexture("jump");
+
+                _levelState.TimeSpeed = this.IsOnHot ? 2 : 1;
             }
             base.Update(gameTime);
         }
@@ -79,6 +85,7 @@ namespace TickTick.Drawing.Actors
             Velocity = Vector2.Zero;
             Position += Vector2.UnitY * 15;
             SetTexture("explode");
+            _levelState.Stop();
         }
 
         /// <summary>
@@ -92,6 +99,7 @@ namespace TickTick.Drawing.Actors
             Velocity *= Vector2.UnitY;
             //TODO: Add
             SetTexture("die");
+            _levelState.Stop();
         }
 
         /// <summary>
@@ -105,6 +113,7 @@ namespace TickTick.Drawing.Actors
             Velocity *= Vector2.UnitY;
             Velocity += Vector2.UnitY * 23;
             SetTexture("celebrate");
+            _levelState.Stop();
         }
 
         /// <summary>
