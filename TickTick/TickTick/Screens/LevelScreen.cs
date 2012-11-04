@@ -19,6 +19,7 @@ namespace TickTick.Screens
         protected PlayerController _playerController;
         protected KeyboardController _keyboardController;
         protected Player _player;
+        protected Camera2D _camera;
 
         /// <summary>
         /// Creates a new level screen
@@ -29,8 +30,9 @@ namespace TickTick.Screens
             : base(game)
         {
             _levelData = data;
-            _background = new Layer(game);
-            _foreground = new Layer(game);
+            _camera = new Camera2D(game);
+            _background = new Layer(game, _camera);
+            _foreground = new Layer(game, _camera);
             _overlay = new Layer(game);
 
             this.Exited += new EventHandler(LevelScreen_Exited);
@@ -83,6 +85,7 @@ namespace TickTick.Screens
                     _player = tile as Player;
                     _playerController = new PlayerController(Game, _keyboardController, _player);
                     _playerController.Initialize();
+                    _camera.FocusOn(_player);
                 }
             }
 
@@ -99,6 +102,7 @@ namespace TickTick.Screens
             /////////////////////////////////////
 
             base.Initialize();
+            _camera.Initialize();
             _background.Initialize();
             _foreground.Initialize();
             _overlay.Initialize();
@@ -169,6 +173,7 @@ namespace TickTick.Screens
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+            _camera.Update(gameTime);
             _background.Update(gameTime);
             _foreground.Update(gameTime);
             _overlay.Update(gameTime);

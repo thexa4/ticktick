@@ -20,13 +20,24 @@ namespace TickTick.Drawing
         protected List<DrawableGameComponent> _children;
 
         /// <summary>
+        /// The Camera
+        /// </summary>
+        public Camera2D Camera { get; protected set; }
+
+        /// <summary>
         /// Draws all components in this layer
         /// </summary>
         /// <param name="gameTime">The current gameTime</param>
         public override void Draw(GameTime gameTime)
         {
             var screenmanager = (ScreenManager)this.Game.Services.GetService(typeof(ScreenManager));
-            screenmanager.SpriteBatch.Begin();
+
+            if (this.Camera != null)
+                screenmanager.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, 
+                    null, null, null, null, this.Camera.GetMatrix());
+            else
+                screenmanager.SpriteBatch.Begin();
+
             foreach (var child in _children)
                 if(child.Visible)
                     child.Draw(gameTime);
@@ -71,6 +82,17 @@ namespace TickTick.Drawing
             : base(game)
         {
             _children = new List<DrawableGameComponent>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="camera"></param>
+        public Layer(Game game, Camera2D camera)
+            : this(game)
+        {
+            this.Camera = camera;
         }
     }
 }

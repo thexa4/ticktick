@@ -121,7 +121,9 @@
     <Compile Include="Drawing\Actors\WalkingActor.cs" />
     <Compile Include="Drawing\Actors\Water.cs" />
     <Compile Include="Drawing\Button.cs" />
+    <Compile Include="Drawing\Camera2D.cs" />
     <Compile Include="Drawing\Clouds.cs" />
+    <Compile Include="Drawing\IFocusable.cs" />
     <Compile Include="Drawing\Layer.cs" />
     <Compile Include="Drawing\LevelButton.cs" />
     <Compile Include="Drawing\Sprite.cs" />

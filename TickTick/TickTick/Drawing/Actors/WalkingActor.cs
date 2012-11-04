@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TickTick.Drawing.Actors
 {
-    public class WalkingActor : LevelSprite, ICollidable
+    public class WalkingActor : LevelSprite, ICollidable, IFocusable
     {
         const float Gravity = 12f;
 
