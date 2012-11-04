@@ -88,7 +88,7 @@ namespace TickTick.Screens
 
             // Add the time
             _overlay.Add(new Sprite(this.Game, "Graphics/Sprites/spr_timer") { Position = Vector2.One * 10 });
-            _overlay.Add(new TimerDisplay(this.Game, _levelState) { Position = new Vector2(25, 30) });
+            _overlay.Add(new TimerDisplay(this.Game, _levelState) { Position = new Vector2(31, 36) });
 
             // Add the quit button
             var quitButton = new Button(this.Game, this.InputManager, "Graphics/Sprites/spr_button_quit");
@@ -129,6 +129,9 @@ namespace TickTick.Screens
         void _levelState_OnLost(object sender, EventArgs e)
         {
             _player.Explode();
+            _playerController.Enabled = false;
+
+            // TODO show popup retry
         }
 
         /// <summary>
@@ -139,6 +142,9 @@ namespace TickTick.Screens
         void _levelState_OnCompleted(object sender, EventArgs e)
         {
             _player.Celebrate();
+            _playerController.Enabled = false;
+
+            // TODO goto next
         }
 
         /// <summary>
