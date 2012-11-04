@@ -25,6 +25,11 @@ namespace TickTick.Data
         /// <summary>
         /// 
         /// </summary>
+        public Boolean Stopped { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler OnCompleted = delegate { }, OnLost = delegate { };
 
         /// <summary>
@@ -36,19 +41,22 @@ namespace TickTick.Data
         }
 
         /// <summary>
-        /// 
+        /// Updates the level state 
         /// </summary>
         /// <param name="gameTime"></param>
         public virtual void Update(GameTime gameTime)
         {
-            TimeLeft -= TimeSpeed * gameTime.ElapsedGameTime.TotalSeconds;
+            if (!this.Stopped)
+            {
+                TimeLeft -= TimeSpeed * gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (TimeLeft < 0)
-                End();
+                if (TimeLeft < 0)
+                    End();
+            }
         }
 
         /// <summary>
-        /// 
+        /// Ends the level (calls events)
         /// </summary>
         public void End()
         {
@@ -56,6 +64,14 @@ namespace TickTick.Data
                 OnLost.Invoke(this, EventArgs.Empty);
             else if (WaterDropsLeft == 0)
                 OnCompleted.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Stops the timer
+        /// </summary>
+        internal void Stop()
+        {
+            Stopped = true;   
         }
     }
 }
