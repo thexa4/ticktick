@@ -99,11 +99,11 @@ namespace TickTick.Services
                 return;
 
             if (_inputManager.Keyboard.IsKeyDown(_left))
-                Action = ControllerAction.Left;
-            else if (_inputManager.Keyboard.IsKeyDown(_right))
-                Action = ControllerAction.Right;
-            else if (_inputManager.Keyboard.IsKeyPressed(_jump))
-                Action = ControllerAction.Jump;
+                Action |= ControllerAction.Left;
+            if (_inputManager.Keyboard.IsKeyDown(_right))
+                Action |= ControllerAction.Right;
+            if (_inputManager.Keyboard.IsKeyDown(_jump))
+                Action |= ControllerAction.Jump;
         }
     }
 }

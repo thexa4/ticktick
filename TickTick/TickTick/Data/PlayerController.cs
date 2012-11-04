@@ -13,33 +13,42 @@ namespace TickTick.Data
     /// </summary>
     public class PlayerController : GameComponent
     {
-        protected InputManager _input;
+        protected KeyboardController _kc;
         public Player Player { get; protected set; }
 
         public const float MoveSpeed = 10;
         public const float JumpSpeed = 6;
 
-        public PlayerController(Game game, Player player)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="player"></param>
+        public PlayerController(Game game, KeyboardController kc, Player player)
             : base(game)
         {
             Player = player;
+            _kc = kc;
         }
 
-        public override void Initialize()
-        {
-            _input = (InputManager)Game.Services.GetService(typeof(InputManager));
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void UpdateInput(GameTime gameTime)
         {
-            if (_input.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
+            var action = _kc.Action;
+
+            if (action.HasFlag(ControllerAction.Left))
                 Player.Velocity = Player.Velocity - Vector2.UnitX * MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (_input.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right))
+            if (action.HasFlag(ControllerAction.Right))
                 Player.Velocity = Player.Velocity + Vector2.UnitX * MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (!Player.IsFalling && _input.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Up))
+            if (!Player.IsFalling && action.HasFlag(ControllerAction.Jump))
                 Player.Velocity = Player.Velocity * Vector2.UnitX - Vector2.UnitY * JumpSpeed;
-            if(!Player.IsFalling && !(_input.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left) || _input.Keyboard.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right)))
-                Player.Velocity *= Vector2.UnitY;
+
+            if (!Player.IsFalling && !(action == ControllerAction.Left || action == ControllerAction.Right))
+                if (!Player.IsOnIce)
+                    Player.Velocity *= Vector2.UnitY;
         }
     }
 }
