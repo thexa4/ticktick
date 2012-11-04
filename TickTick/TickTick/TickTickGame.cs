@@ -148,7 +148,8 @@ namespace TickTick
             this.ScreenManager.SpriteFonts.LoadFont("Framerate", "Fonts/Default");
             
             // Loads audio
-            this.AudioManager.Load("snd_music", "bgm").Play();
+            this.AudioManager.Load("snd_music", "bgm");
+            this.AudioManager.Loop("bgm");
         }
 
         /// <summary>
