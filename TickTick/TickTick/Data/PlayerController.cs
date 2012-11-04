@@ -49,6 +49,9 @@ namespace TickTick.Data
         /// <param name="gameTime"></param>
         public void UpdateInput(GameTime gameTime)
         {
+            if (!this.Enabled)
+                return;
+
             var action = _kc.Action;
 
             if (action.HasFlag(ControllerAction.Left))
