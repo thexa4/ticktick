@@ -75,6 +75,17 @@ namespace TickTick.Drawing.Actors
             SetSprite("die");
         }
 
+        public void Celebrate()
+        {
+            if (IsDead || IsFinished)
+                return;
+            IsFinished = true;
+            Velocity *= Vector2.UnitY;
+            Velocity += Vector2.UnitY * 23;
+            //TODO: Add
+            SetSprite("celebrate");
+        }
+
         public override void StartTouch(ICollidable collider)
         {
             base.StartTouch(collider);
