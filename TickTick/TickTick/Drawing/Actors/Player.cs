@@ -11,35 +11,48 @@ namespace TickTick.Drawing.Actors
     {
         Dictionary<string, Texture2D> _textures { get; set; }
         Dictionary<string, string> _assets { get; set; }
+
+        /// <summary>
+        /// Collidedwith 
+        /// </summary>
         public bool IsDead { get; set; }
         public bool IsFinished { get; set; }
         public bool IsExploded { get; set; }
 
         protected int TouchingIceBlocks { get; set; }
         protected int TouchingHotBlocks { get; set; }
+
+        /// <summary>
+        /// Currently on an ice block
+        /// </summary>
         public bool IsOnIce { get { return TouchingIceBlocks > 0; } }
+
+        /// <summary>
+        /// Currently on a hot block
+        /// </summary>
         public bool IsOnHot { get { return TouchingHotBlocks > 0; } }
 
-        public float MoveSpeed { get; set; }
-
+        /// <summary>
+        /// Creates a player
+        /// </summary>
+        /// <param name="game">Game to bind to</param>
+        /// <param name="layer">Layer to draw to</param>
         public Player(Game game, Layer layer)
             : base(game, layer, "Graphics/Sprites/Player/spr_idle")
         {
             _textures = new Dictionary<string, Texture2D>();
-            MoveSpeed = 7.0f;
         }
 
+        /// <summary>
+        /// Frame Renewal
+        /// </summary>
+        /// <param name="gameTime">Snapshot of Timing Values</param>
         public override void Update(GameTime gameTime)
         {
             if (!IsFinished && !IsDead)
             {
                 if (IsDead)
                     return;
-
-                if (IsOnIce)
-                    MoveSpeed = 7.0f * 1.5f;
-                else
-                    MoveSpeed = 7.0f;
 
                 if (!IsFalling)
                 {
@@ -54,6 +67,9 @@ namespace TickTick.Drawing.Actors
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Explode
+        /// </summary>
         public void Explode()
         {
             if (IsDead || IsFinished)
@@ -62,9 +78,12 @@ namespace TickTick.Drawing.Actors
             IsExploded = true;
             Velocity = Vector2.Zero;
             Position += Vector2.UnitY * 15;
-            SetSprite("explode");
+            SetTexture("explode");
         }
 
+        /// <summary>
+        /// Die
+        /// </summary>
         public void Die()
         {
             if (IsDead || IsFinished)
@@ -72,9 +91,12 @@ namespace TickTick.Drawing.Actors
             IsDead = true;
             Velocity *= Vector2.UnitY;
             //TODO: Add
-            SetSprite("die");
+            SetTexture("die");
         }
 
+        /// <summary>
+        /// Celebrate
+        /// </summary>
         public void Celebrate()
         {
             if (IsDead || IsFinished)
@@ -82,10 +104,13 @@ namespace TickTick.Drawing.Actors
             IsFinished = true;
             Velocity *= Vector2.UnitY;
             Velocity += Vector2.UnitY * 23;
-            //TODO: Add
-            SetSprite("celebrate");
+            SetTexture("celebrate");
         }
 
+        /// <summary>
+        /// Start touch handling
+        /// </summary>
+        /// <param name="collider"></param>
         public override void StartTouch(ICollidable collider)
         {
             base.StartTouch(collider);
@@ -101,6 +126,10 @@ namespace TickTick.Drawing.Actors
                 TouchingIceBlocks++;
         }
 
+        /// <summary>
+        /// End touch handling
+        /// </summary>
+        /// <param name="collider"></param>
         public override void EndTouch(ICollidable collider)
         {
             base.EndTouch(collider);
@@ -115,7 +144,11 @@ namespace TickTick.Drawing.Actors
             if (tile.IsIce)
                 TouchingIceBlocks--;
         }
-
+        
+        /// <summary>
+        /// Loads all content
+        /// </summary>
+        /// <param name="contentManager"></param>
         public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager contentManager)
         {
             _assets = new Dictionary<string, string> {
@@ -133,12 +166,17 @@ namespace TickTick.Drawing.Actors
             base.LoadContent(contentManager);
         }
 
-        public void SetTexture(string asset)
+        /// <summary>
+        /// Sets the new texture
+        /// </summary>
+        /// <param name="asset">Asset name</param>
+        public void SetTexture(String asset)
         {
             if (Texture == _textures[asset])
                 return;
             Texture = _textures[asset];
             SetSprite(_assets[asset]);
+            this.Size = new Vector2(Texture.Width / Columns, Texture.Height / Rows) * Scale;
         }
     }
 }

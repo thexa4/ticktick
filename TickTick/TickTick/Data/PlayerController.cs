@@ -19,6 +19,8 @@ namespace TickTick.Data
         public const float MoveSpeed = 10;
         public const float JumpSpeed = 6;
 
+        protected Single ActualMoveSpeed;
+
         /// <summary>
         /// 
         /// </summary>
@@ -32,7 +34,17 @@ namespace TickTick.Data
         }
 
         /// <summary>
-        /// 
+        /// Frame Renewal
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            ActualMoveSpeed = MoveSpeed * (Player.IsOnIce ? 1.5f : 1.0f);
+        }
+
+        /// <summary>
+        /// Update Input
         /// </summary>
         /// <param name="gameTime"></param>
         public void UpdateInput(GameTime gameTime)
@@ -40,11 +52,11 @@ namespace TickTick.Data
             var action = _kc.Action;
 
             if (action.HasFlag(ControllerAction.Left))
-                Player.Velocity = Player.Velocity - Vector2.UnitX * MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Player.Velocity = Player.Velocity - Vector2.UnitX * ActualMoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (action.HasFlag(ControllerAction.Right))
-                Player.Velocity = Player.Velocity + Vector2.UnitX * MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Player.Velocity = Player.Velocity + Vector2.UnitX * ActualMoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (!Player.IsFalling && action.HasFlag(ControllerAction.Jump))
-                Player.Velocity = Player.Velocity * Vector2.UnitX - Vector2.UnitY * JumpSpeed;
+                Player.Velocity = Player.Velocity * Vector2.UnitX - Vector2.UnitY * JumpSpeed; //* 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (!Player.IsFalling && !(action == ControllerAction.Left || action == ControllerAction.Right))
                 if (!Player.IsOnIce)

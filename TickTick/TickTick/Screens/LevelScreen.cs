@@ -169,6 +169,7 @@ namespace TickTick.Screens
             
             _levelState.Update(gameTime);
             _keyboardController.Update(gameTime);
+            _playerController.Update(gameTime);
         }
 
         /// <summary>
