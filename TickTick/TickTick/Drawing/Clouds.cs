@@ -12,13 +12,13 @@ namespace TickTick.Drawing
         protected Dictionary<Sprite, Single> _velocities;
         protected Int32 visible;
 
-        static Random Random;
+        static Random Random = new Random();
         
         /// <summary>
-        /// 
+        /// Creates new Clouds SpriteSet
         /// </summary>
-        /// <param name="game"></param>
-        /// <param name="n"></param>
+        /// <param name="game">Game to bind to</param>
+        /// <param name="n">Number of clouds</param>
         public Clouds(Game game, Int32 n) : base(game)
         {
             _velocities = new Dictionary<Sprite, float>();
@@ -31,10 +31,10 @@ namespace TickTick.Drawing
                 _velocities.Add(_cloudSprites[i], 0);
             }
 
+            // We only want different sprites to be visible. We have this number of 
+            // sprites (length) and we want that number of sprites (n). So get the
+            // minimum and all will be fine.
             visible = Math.Min(n, _cloudSprites.Length);
-
-            if (Random == null)
-                Random = new Random();
         }
 
         /// <summary>
@@ -52,8 +52,9 @@ namespace TickTick.Drawing
         }
 
         /// <summary>
-        /// 
+        /// Picks and places a invisible sprites and starts showing it
         /// </summary>
+        /// <param name="start">If start is true, can spawn on screen</param>
         public void PickAndPlace(Boolean start = false)
         {
             var candidates = _cloudSprites.Where(sprite => !sprite.Visible).ToArray();
