@@ -10,6 +10,13 @@ namespace TickTick.Data
 {
     partial class Level
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="layer"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public List<DrawableGameComponent> GenerateComponents(Game game, Layer layer, out LevelState state)
         {
             var l = new List<DrawableGameComponent>();
@@ -57,7 +64,7 @@ namespace TickTick.Data
                             // End tile
                             l.Add(new Finish(game, layer, "Graphics/Sprites/spr_goal", state)
                             {
-                                Position = position,
+                                Position = position - Vector2.UnitY * 23,
                             });
                             break;
                         case 'W':
