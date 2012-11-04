@@ -55,13 +55,16 @@ namespace TickTick.Data
                             break;
                         case 'X':
                             // End tile
-                            //TODO: Add endtile loader
+                            l.Add(new Finish(game, layer, "Graphics/Sprites/spr_goal", state)
+                            {
+                                Position = position,
+                            });
                             break;
                         case 'W':
                             // Water tile
                             l.Add(new Water(game, layer, "Graphics/Sprites/spr_water", state)
                             {
-                                Position = position,
+                                Position = position + Vector2.UnitX * 23,
                             });
                             break;
                         case '1':

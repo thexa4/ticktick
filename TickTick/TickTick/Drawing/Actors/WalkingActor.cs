@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using TickTick.Services;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TickTick.Drawing.Actors
 {
@@ -39,10 +40,15 @@ namespace TickTick.Drawing.Actors
 
             Position = Position + Velocity;
 
+            if (Velocity.X < 0)
+                SpriteEffect = SpriteEffects.FlipHorizontally;
+            else if (Velocity.X > 0)
+                SpriteEffect = SpriteEffects.None;
+
             base.Update(gameTime);
         }
 
-        public void ProcessTouches(List<ICollidable> colliders)
+        public virtual void ProcessTouches(List<ICollidable> colliders)
         {
             Vector2 prev = Position;
             IsFalling = true;
@@ -75,13 +81,13 @@ namespace TickTick.Drawing.Actors
                 Velocity *= Vector2.UnitX;
         }
 
-        public void StartTouch(ICollidable collider)
+        public virtual void StartTouch(ICollidable collider)
         {
             if (collider.IsPlatform && !IsBelow(collider))
                 TouchingPlatforms.Add(collider);
         }
 
-        public void EndTouch(ICollidable collider)
+        public virtual void EndTouch(ICollidable collider)
         {
             if (collider.IsPlatform)
                 if (TouchingPlatforms.Contains(collider))

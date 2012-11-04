@@ -70,8 +70,15 @@ namespace TickTick.Drawing.Actors
             this.AnimationSpeed = 1f / 24f;
             this.Layer = layer;
 
+            SetSprite(assetname);
+        }
+
+        protected void SetSprite(string assetname)
+        {
             this.Rows = 1;
             this.Columns = 1;
+            this._frame = 0;
+            this._timeLeft = AnimationSpeed;
 
             // Try guessing spritesheet width from assetname
             string[] parameters = assetname.Split('@');
