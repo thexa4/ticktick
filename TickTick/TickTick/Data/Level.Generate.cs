@@ -76,7 +76,7 @@ namespace TickTick.Data
                             break;
                         case '1':
                             // Player tile
-                            l.Add(new Player(game, layer)
+                            l.Add(new Player(game, layer, state)
                             {
                                 Position = position - Vector2.UnitY * TileHeight,
                             });
