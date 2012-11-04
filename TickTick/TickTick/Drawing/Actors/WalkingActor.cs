@@ -12,13 +12,42 @@ namespace TickTick.Drawing.Actors
     {
         const float Gravity = 12f;
 
+        /// <summary>
+        /// Is a solid actor
+        /// </summary>
         public bool IsSolid { get; set; }
+
+        /// <summary>
+        /// Is a platform
+        /// </summary>
         public bool IsPlatform { get; set; }
+
+        /// <summary>
+        /// Current velocity
+        /// </summary>
         public Vector2 Velocity { get; set; }
+
+        /// <summary>
+        /// Maximum velocity
+        /// </summary>
         public Vector2 MaxVelocity { get; set; }
+
+        /// <summary>
+        /// Is falling flag
+        /// </summary>
         public bool IsFalling { get; set; }
+
+        /// <summary>
+        /// List of touching collider platforms
+        /// </summary>
         public List<ICollidable> TouchingPlatforms { get; set; }
 
+        /// <summary>
+        /// Creates a new walking actor
+        /// </summary>
+        /// <param name="game">Game to Bind to</param>
+        /// <param name="layer">Layer</param>
+        /// <param name="assetname">Assetname</param>
         public WalkingActor(Game game, Layer layer, string assetname) : base(game, layer, assetname)
         {
             // Add itself to collision manager
@@ -30,11 +59,12 @@ namespace TickTick.Drawing.Actors
         }
 
         /// <summary>
-        /// 
+        /// Updates the actor
         /// </summary>
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
+            // Increase the speed
             Velocity = Velocity + Vector2.UnitY * Gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Velocity = new Vector2(
@@ -42,7 +72,8 @@ namespace TickTick.Drawing.Actors
                 MathHelper.Clamp(Velocity.Y, -MaxVelocity.Y, MaxVelocity.Y)
             );
 
-            Position = Position + Velocity;
+            // Update the position
+            Position = Position + Velocity * 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (Velocity.X < 0)
                 SpriteEffect = SpriteEffects.FlipHorizontally;
@@ -53,7 +84,7 @@ namespace TickTick.Drawing.Actors
         }
 
         /// <summary>
-        /// 
+        /// Process the touches
         /// </summary>
         /// <param name="colliders"></param>
         public virtual void ProcessTouches(List<ICollidable> colliders)
@@ -89,12 +120,20 @@ namespace TickTick.Drawing.Actors
                 Velocity *= Vector2.UnitX;
         }
 
+        /// <summary>
+        /// Start touch event
+        /// </summary>
+        /// <param name="collider"></param>
         public virtual void StartTouch(ICollidable collider)
         {
             if (collider.IsPlatform && !IsBelow(collider))
                 TouchingPlatforms.Add(collider);
         }
 
+        /// <summary>
+        /// End touch event
+        /// </summary>
+        /// <param name="collider"></param>
         public virtual void EndTouch(ICollidable collider)
         {
             if (collider.IsPlatform)
@@ -104,6 +143,11 @@ namespace TickTick.Drawing.Actors
             IsFalling = true;
         }
 
+        /// <summary>
+        /// Check if is below
+        /// </summary>
+        /// <param name="collider"></param>
+        /// <returns></returns>
         protected bool IsBelow(ICollidable collider)
         {
             Vector2 dir = GetDirection(collider);
@@ -112,6 +156,11 @@ namespace TickTick.Drawing.Actors
             return false;
         }
 
+        /// <summary>
+        /// Check if is above
+        /// </summary>
+        /// <param name="collider"></param>
+        /// <returns></returns>
         protected bool IsAbove(ICollidable collider)
         {
             Vector2 dir = GetDirection(collider);
@@ -120,6 +169,11 @@ namespace TickTick.Drawing.Actors
             return false;
         }
 
+        /// <summary>
+        /// Gets the direction
+        /// </summary>
+        /// <param name="collider"></param>
+        /// <returns></returns>
         public Vector2 GetDirection(ICollidable collider)
         {
             Vector2 mycenter = Position + Size / 2;
@@ -127,6 +181,11 @@ namespace TickTick.Drawing.Actors
             return othercenter - mycenter;
         }
 
+        /// <summary>
+        /// Check if is left
+        /// </summary>
+        /// <param name="collider"></param>
+        /// <returns></returns>
         protected bool IsLeft(ICollidable collider)
         {
             Vector2 dir = GetDirection(collider);
@@ -135,6 +194,11 @@ namespace TickTick.Drawing.Actors
             return false;
         }
 
+        /// <summary>
+        /// Check if is right
+        /// </summary>
+        /// <param name="collider"></param>
+        /// <returns></returns>
         protected bool IsRight(ICollidable collider)
         {
             Vector2 dir = GetDirection(collider);
@@ -143,6 +207,10 @@ namespace TickTick.Drawing.Actors
             return false;
         }
 
+        /// <summary>
+        /// Moves out of the collider
+        /// </summary>
+        /// <param name="collider"></param>
         public void MoveOut(ICollidable collider)
         {
             Vector2 mycenter = Position + Size / 2;
