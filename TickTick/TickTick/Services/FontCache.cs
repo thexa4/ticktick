@@ -36,6 +36,9 @@ namespace TickTick.Services
 
             // Add this as service to the services container
             game.Services.AddService(typeof(FontCache), this);
+
+            this.Enabled = false;
+            this.Visible = false;
         }
 
         /// <summary>

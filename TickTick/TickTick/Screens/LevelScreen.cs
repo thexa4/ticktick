@@ -13,14 +13,15 @@ namespace TickTick.Screens
     public class LevelScreen : GameScreen
     {
         protected Level _levelData;
+        protected LevelState _levelState;
         protected Layer _background, _foreground, _overlay;
         protected PlayerController _playerController;
 
         /// <summary>
-        /// 
+        /// Creates a new level screen
         /// </summary>
-        /// <param name="game"></param>
-        /// <param name="data"></param>
+        /// <param name="game">Game to bind to</param>
+        /// <param name="data">Level data</param>
         public LevelScreen(Game game, Level data)
             : base(game)
         {
@@ -31,7 +32,7 @@ namespace TickTick.Screens
         }
 
         /// <summary>
-        /// 
+        /// Initializes the screen
         /// </summary>
         public override void Initialize()
         {
@@ -50,16 +51,8 @@ namespace TickTick.Screens
             // Add the clouds
             _background.Add(new Clouds(this.Game, 2));
 
-            // Add the time
-            _overlay.Add(new Sprite(this.Game, "Graphics/Sprites/spr_timer") { Position = Vector2.One * 10 });
-            _overlay.Add(new TimerDisplay(this.Game, "Graphics/Sprites/spr_timer")); //{ Position = new Vector2(25, 30) });
-
-            // Add the quit button
-            var quitButton = new Button(this.Game, this.InputManager, "Graphics/Sprites/spr_button_quit");
-            _overlay.Add(quitButton);
-
             // Get the tiles
-            var tiles = _levelData.GenerateComponents(this.Game, _foreground);
+            var tiles = _levelData.GenerateComponents(this.Game, _foreground, out _levelState);
             foreach (var tile in tiles)
             {
                 _foreground.Add(tile);
@@ -70,11 +63,18 @@ namespace TickTick.Screens
                 }
             }
 
+            // Add the time
+            _overlay.Add(new Sprite(this.Game, "Graphics/Sprites/spr_timer") { Position = Vector2.One * 10 });
+            _overlay.Add(new TimerDisplay(this.Game, _levelState) { Position = new Vector2(25, 30) });
+
+            // Add the quit button
+            var quitButton = new Button(this.Game, this.InputManager, "Graphics/Sprites/spr_button_quit");
+            _overlay.Add(quitButton);
+
             base.Initialize();
             _background.Initialize();
             _foreground.Initialize();
             _overlay.Initialize();
-
 
             _backgroundSky.Position = Vector2.UnitY * (this.ScreenManager.ScreenHeight - _backgroundSky.Texture.Height);
             foreach (var mountain in _mountains)
@@ -86,7 +86,7 @@ namespace TickTick.Screens
         }
 
         /// <summary>
-        /// 
+        /// On quit button clicked
         /// </summary>
         /// <param name="button"></param>
         /// <param name="relativePosition"></param>
@@ -97,23 +97,25 @@ namespace TickTick.Screens
         }
 
         /// <summary>
-        /// 
+        /// Updates the level
         /// </summary>
-        /// <param name="gameTime"></param>
-        /// <param name="otherScreenHasFocus"></param>
-        /// <param name="coveredByOtherScreen"></param>
+        /// <param name="gameTime">Snapshot of Timing Values</param>
+        /// <param name="otherScreenHasFocus">Other Screen has Focus flag (Game.Active == false)</param>
+        /// <param name="coveredByOtherScreen">Other GameScreen has been drawn</param>
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
             _background.Update(gameTime);
             _foreground.Update(gameTime);
             _overlay.Update(gameTime);
+            
+            _levelState.Update(gameTime);
         }
 
         /// <summary>
-        /// 
+        /// Draws the level
         /// </summary>
-        /// <param name="gameTime"></param>
+        /// <param name="gameTime">Snapshot of Timing Values</param>
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
@@ -122,6 +124,10 @@ namespace TickTick.Screens
             _overlay.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Handles the input
+        /// </summary>
+        /// <param name="gameTime">Snapshot of Timing Values</param>
         public override void HandleInput(GameTime gameTime)
         {
             base.HandleInput(gameTime);

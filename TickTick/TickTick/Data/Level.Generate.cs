@@ -10,10 +10,10 @@ namespace TickTick.Data
 {
     partial class Level
     {
-        public List<DrawableGameComponent> GenerateComponents(Game game, Layer layer)
+        public List<DrawableGameComponent> GenerateComponents(Game game, Layer layer, out LevelState state)
         {
             var l = new List<DrawableGameComponent>();
-            var state = new LevelState();
+            state = new LevelState() { TimeLeft = 30 };
 
             for (int x = 0; x < Width; x++)
                 for (int y = 0; y < Height; y++)

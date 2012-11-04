@@ -29,6 +29,10 @@ namespace TickTick.Drawing.Actors
             IsFalling = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             Velocity = Velocity + Vector2.UnitY * Gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -48,6 +52,10 @@ namespace TickTick.Drawing.Actors
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="colliders"></param>
         public virtual void ProcessTouches(List<ICollidable> colliders)
         {
             Vector2 prev = Position;
