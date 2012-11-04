@@ -24,11 +24,10 @@ namespace TickTick.Drawing
         public Vector2 Position { get; set; }
 
         /// <summary>
-        /// 
+        /// Creates a new timer display
         /// </summary>
         /// <param name="game"></param>
-        /// <param name="p"></param>
-        /// <param name="_levelState"></param>
+        /// <param name="levelState">The Level State</param>
         public TimerDisplay(Game game, Data.LevelState levelState)
             : base(game)
         {
@@ -68,9 +67,9 @@ namespace TickTick.Drawing
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            var timeleft = Math.Round(_levelState.TimeLeft);
+            var timeleft = Math.Max(0, Math.Round(_levelState.TimeLeft));
             this.ScreenManager.SpriteBatch.DrawString(this.ScreenManager.SpriteFonts["Hud"], 
-                String.Format("{0}:{1}", (Int32)(timeleft / 60), timeleft % 60), Position, Color.White);
+                String.Format("{0}:{1:00}", (Int32)(timeleft / 60), timeleft % 60), Position, Color.White);
         }
     }
 }
