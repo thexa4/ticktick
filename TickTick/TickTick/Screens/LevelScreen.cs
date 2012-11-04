@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using TickTick.Services;
 using TickTick.Drawing;
 using TickTick.Drawing.Actors;
+using Microsoft.Xna.Framework.Input;
 
 namespace TickTick.Screens
 {
@@ -16,6 +17,8 @@ namespace TickTick.Screens
         protected LevelState _levelState;
         protected Layer _background, _foreground, _overlay;
         protected PlayerController _playerController;
+        protected KeyboardController _keyboardController;
+        protected Player _player;
 
         /// <summary>
         /// Creates a new level screen
@@ -29,6 +32,18 @@ namespace TickTick.Screens
             _background = new Layer(game);
             _foreground = new Layer(game);
             _overlay = new Layer(game);
+
+            this.Exited += new EventHandler(LevelScreen_Exited);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void LevelScreen_Exited(object sender, EventArgs e)
+        {
+            ((CollisionManager)this.Game.Services.GetService(typeof(CollisionManager))).Clear();
         }
 
         /// <summary>
@@ -36,6 +51,13 @@ namespace TickTick.Screens
         /// </summary>
         public override void Initialize()
         {
+            _keyboardController = new KeyboardController(this.Game, Keys.W, Keys.A, Keys.D);
+            _keyboardController.Initialize();
+
+            /////////////////////////////////////
+            // Build the layers
+            /////////////////////////////////////
+
             // Add the sky
             var _backgroundSky = new Sprite(this.Game, "Graphics/Backgrounds/spr_sky");
             _background.Add(_backgroundSky);
@@ -58,7 +80,8 @@ namespace TickTick.Screens
                 _foreground.Add(tile);
                 if (tile.GetType() == typeof(Player))
                 {
-                    _playerController = new PlayerController(Game, tile as Player);
+                    _player = tile as Player;
+                    _playerController = new PlayerController(Game, _keyboardController, _player);
                     _playerController.Initialize();
                 }
             }
@@ -71,6 +94,10 @@ namespace TickTick.Screens
             var quitButton = new Button(this.Game, this.InputManager, "Graphics/Sprites/spr_button_quit");
             _overlay.Add(quitButton);
 
+            /////////////////////////////////////
+            // Initialize the screen components
+            /////////////////////////////////////
+
             base.Initialize();
             _background.Initialize();
             _foreground.Initialize();
@@ -82,7 +109,36 @@ namespace TickTick.Screens
                     Vector2.UnitY * (this.ScreenManager.ScreenHeight - mountain.Texture.Height);
 
             quitButton.Position = new Vector2(this.ScreenManager.ScreenWidth - quitButton.Texture.Width - 10, 10);
+
+            /////////////////////////////////////
+            // Action handlers
+            /////////////////////////////////////
+
             quitButton.OnClicked += new ButtonClickDelegate(quitButton_OnClicked);
+            _levelState.OnCompleted += new EventHandler(_levelState_OnCompleted);
+            _levelState.OnLost += new EventHandler(_levelState_OnLost);
+
+            System.Diagnostics.Debug.WriteLine("Called init");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void _levelState_OnLost(object sender, EventArgs e)
+        {
+            _player.Explode();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void _levelState_OnCompleted(object sender, EventArgs e)
+        {
+            _player.Celebrate();
         }
 
         /// <summary>
@@ -92,8 +148,10 @@ namespace TickTick.Screens
         /// <param name="relativePosition"></param>
         protected void quitButton_OnClicked(Button button, Vector2 relativePosition)
         {
-            this.ScreenManager.AddScreen(new LevelSelectScreen(this.Game));
             this.ExitScreen();
+            this.ScreenManager.AddScreen(new LevelSelectScreen(this.Game));
+
+            System.Diagnostics.Debug.WriteLine("Call exit");
         }
 
         /// <summary>
@@ -110,6 +168,7 @@ namespace TickTick.Screens
             _overlay.Update(gameTime);
             
             _levelState.Update(gameTime);
+            _keyboardController.Update(gameTime);
         }
 
         /// <summary>

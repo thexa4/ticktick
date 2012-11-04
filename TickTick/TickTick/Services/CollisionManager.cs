@@ -36,6 +36,15 @@ namespace TickTick.Services
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public void Clear()
+        {
+            Colliders.Clear();
+            CollisionPairs.Clear();
+        }
+
+        /// <summary>
         /// Calculates collisions and notifies objects
         /// </summary>
         public override void Update(GameTime gameTime)

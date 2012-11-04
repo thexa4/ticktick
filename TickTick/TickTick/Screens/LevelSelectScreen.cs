@@ -88,6 +88,7 @@ namespace TickTick.Screens
         {
             var levelButton = button as LevelButton;
             this.ScreenManager.AddScreen(new LevelScreen(this.Game, levelButton.Level));
+            this.ExitScreen();
         }
 
     }
